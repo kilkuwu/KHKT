@@ -1,0 +1,7 @@
+{
+    "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=",
+    "board": "esp32:esp32:esp32wrover",
+    "port": "COM3",
+    "sketch": "sketch\\sketch.ino",
+    "output": "sketch\\build"
+}

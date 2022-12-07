@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    const ID = "<%= id %>"
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="room.js" type="module"></script>
+  <link rel="stylesheet" href="room.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+</head>
+
+<body>
+  <div id="raw-data">
+    <div class="info" data-label="heartRate"></div>
+    <div class="info" data-label="temperature"></div>
+    <div class="info" data-label="bloodPressure"></div>
+    <div class="info" data-label="spo2"></div>
+    <div class="info" data-label="coordinates"></div>
+  </div>
+  <div id="visualized-data">
+    <div id="info-grid">
+      <div class="info" data-label="heartRate">75</div>
+      <div class="info" data-label="temperature">36</div>
+      <div class="info" data-label="bloodPressure">110 / 90</div>
+      <div class="info" data-label="spo2">96</div>
+    </div>
+  </div>
+</body>
+
+</html>
