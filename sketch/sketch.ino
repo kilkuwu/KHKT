@@ -1,5 +1,5 @@
-#define MEASURE_HR_SPO2
-#define MEASURE_TEMP
+// #define MEASURE_HR_SPO2
+// #define MEASURE_TEMP
 // #define MEASURE_BP
 // #define GET_GPS
 // #define MEASURE_GAS
@@ -20,7 +20,7 @@
 #define str(x) String(x)
 
 String chipId;
-String HOST = "192.168.0.100";
+String HOST = "172.20.10.2";
 int PORT = 3000;
 
 namespace IOC {
@@ -74,7 +74,7 @@ namespace IOC {
         eventHandlers[getType(sIOtype_ERROR)] = &handleError;
         eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
 
-        client.begin(HOST, PORT, "/socket.io/?EIO=4");
+        client.begin(HOST.c_str(), PORT, "/socket.io/?EIO=4");
         client.onEvent(socketManager);
     }
 
@@ -168,13 +168,14 @@ void setup() {
     WiFiManager wm;
     wm.autoConnect();
 
-    IOC::init();
 #ifdef MEASURE_HR_SPO2
     PO::init();
 #endif
 #ifdef MEASURE_TEMP
     TMP::init();
 #endif
+
+    IOC::init();
 }
 
 const unsigned long interval = 1000;

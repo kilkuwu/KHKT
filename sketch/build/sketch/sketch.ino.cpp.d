@@ -128,14 +128,6 @@ c:\Users\kilkuwu\Documents\code\khkt\sketch\build\sketch\sketch.ino.cpp.o: \
  C:\Users\kilkuwu\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.5/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash.h \
  C:\Users\kilkuwu\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.5/tools/sdk/esp32/include/spi_flash/include/esp_spi_flash_counters.h \
  C:\Users\kilkuwu\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.5/tools/sdk/esp32/include/esp_hw_support/include/soc/esp32/spiram.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100_PulseOximeter.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/CircularBuffer.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/CircularBuffer.tpp \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100_Registers.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100_BeatDetector.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100_Filters.h \
- C:\Users\kilkuwu\Documents\Arduino\libraries\MAX30100lib\src/MAX30100_SpO2Calculator.h \
  C:\Users\kilkuwu\Documents\Arduino\libraries\Adafruit_MLX90614_Library/Adafruit_MLX90614.h \
  C:\Users\kilkuwu\Documents\Arduino\libraries\Adafruit_BusIO/Adafruit_I2CDevice.h \
  C:\Users\kilkuwu\AppData\Local\Arduino15\packages\esp32\hardware\esp32\2.0.5\libraries\Wire\src/Wire.h \

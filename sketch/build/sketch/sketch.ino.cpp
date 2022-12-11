@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #line 1 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
-#define MEASURE_HR_SPO2
+// #define MEASURE_HR_SPO2
 #define MEASURE_TEMP
 // #define MEASURE_BP
 // #define GET_GPS
@@ -22,90 +22,8 @@
 #define str(x) String(x)
 
 String chipId;
-String HOST = "192.168.0.100";
+String HOST = "192.168.219.236";
 int PORT = 3000;
-
-namespace IOC {
-    SocketIOclient client;
-    const int numberOfEvents = 7;
-    void (*eventHandlers[numberOfEvents])(uint8_t *, const size_t &);
-
-    void handleConnect(uint8_t *_, const size_t &length) {
-        Serial.printf("[IOc] Connected to url: %s\n", _);
-
-        String payload = str("[\"join\",\"") + chipId + "\"]";
-
-        bool success = false;
-        while(!success) {
-            delay(1000);
-            Serial.printf("[IOc] Trying to join a room\n");
-            success = client.sendEVENT(payload);
-        }
-
-        Serial.printf("[IOc] Successfully joined a room\n");
-    }
-
-    void handleDisconnect(uint8_t *payload, const size_t &length) {
-        Serial.printf("[IOc] Disconnected!\n");
-    }
-
-    void handleError(uint8_t *payload, const size_t &length) {
-        Serial.printf("[IOc] get error: %u\n", length);
-    }
-
-    void handleEvent(uint8_t *payload, const size_t &length) {
-        Serial.printf("[IOc] get event: %s\n", payload);
-    }
-
-    int getType(socketIOmessageType_t type) {
-        return type - 48;
-    }
-
-    void socketManager(socketIOmessageType_t type, uint8_t *payload, size_t length) {
-        if(type == sIOtype_CONNECT)
-            client.send(sIOtype_CONNECT, "/");
-        int baseType = getType(type);
-        if(eventHandlers[baseType] != nullptr) {
-            (*eventHandlers[baseType])(payload, length);
-        }
-    }
-
-    void init() {
-        eventHandlers[getType(sIOtype_CONNECT)] = &handleConnect;
-        eventHandlers[getType(sIOtype_DISCONNECT)] = &handleDisconnect;
-        eventHandlers[getType(sIOtype_ERROR)] = &handleError;
-        eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
-
-        client.begin(HOST, PORT, "/socket.io/?EIO=4");
-        client.onEvent(socketManager);
-    }
-
-    void loop() {
-        IOC::client.loop();
-    }
-
-    void sendLoopEvent(const double &heartRate, const double &SpO2, const double temperature[2], const double bloodPressure[2], const double coords[2]) {
-        DynamicJsonDocument doc(512);
-        JsonArray arr = doc.to<JsonArray>();
-        arr.add("sendData");
-        JsonObject param1 = arr.createNestedObject();
-        param1["heartRate"] = heartRate;
-        param1["SpO2"] = SpO2;
-        param1["temperature"][0] = temperature[0];
-        param1["temperature"][1] = temperature[1];
-        param1["bloodPressure"][0] = bloodPressure[0];
-        param1["bloodPressure"][1] = bloodPressure[1];
-        param1["coords"][0] = coords[0];
-        param1["coords"][1] = coords[1];
-
-        String payload;
-        serializeJson(doc, payload);
-
-        bool success = IOC::client.sendEVENT(payload);
-
-        Serial.printf("[IOc] Sending Loop Event: %d\n", success);
-    }
-}
 
 #ifdef MEASURE_HR_SPO2
 namespace PO {
@@ -122,8 +40,6 @@ namespace PO {
 
         if(!pox.begin()) {
             Serial.println("FAILED");
-            for(;;)
-                ;
         } else {
             Serial.println("SUCCESS");
 
@@ -158,13 +74,105 @@ namespace TMP {
 }
 #endif
 
-#line 159 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
+namespace IOC {
+    SocketIOclient client;
+    const int numberOfEvents = 7;
+    void (*eventHandlers[numberOfEvents])(uint8_t *, const size_t &);
+
+    void handleConnect(uint8_t *_, const size_t &length) {
+        Serial.printf("[IOc] Connected to url: %s\n", _);
+
+        String payload = str("[\"join\",\"") + chipId + "\"]";
+
+        bool success = false;
+        while(!success) {
+            delay(1000);
+            Serial.printf("[IOc] Trying to join a room\n");
+            success = client.sendEVENT(payload);
+        }
+
+        Serial.printf("[IOc] Successfully joined a room\n");
+
+#ifdef MEASURE_HR_SPO2
+        PO::init();
+#endif
+    }
+
+    void handleDisconnect(uint8_t *payload, const size_t &length) {
+        Serial.printf("[IOc] Disconnected!\n");
+    }
+
+    void handleError(uint8_t *payload, const size_t &length) {
+        Serial.printf("[IOc] get error: %u\n", length);
+    }
+
+    void handleEvent(uint8_t *payload, const size_t &length) {
+        Serial.printf("[IOc] get event: %s\n", payload);
+    }
+
+    int getType(socketIOmessageType_t type) {
+        return type - 48;
+    }
+
+    void socketManager(socketIOmessageType_t type, uint8_t *payload, size_t length) {
+        if(type == sIOtype_CONNECT)
+            client.send(sIOtype_CONNECT, "/");
+        int baseType = getType(type);
+        if(eventHandlers[baseType] != nullptr) {
+            (*eventHandlers[baseType])(payload, length);
+        }
+    }
+
+    void init() {
+        eventHandlers[getType(sIOtype_CONNECT)] = &handleConnect;
+        eventHandlers[getType(sIOtype_DISCONNECT)] = &handleDisconnect;
+        eventHandlers[getType(sIOtype_ERROR)] = &handleError;
+        eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
+
+        client.begin(HOST.c_str(), PORT, "/socket.io/?EIO=4");
+
+        while(!client.isConnected()) {
+            Serial.printf("[IOc] Not connected to server\n");
+            delay(1000);
+        }
+
+        client.onEvent(socketManager);
+    }
+
+    void loop() {
+        IOC::client.loop();
+    }
+
+    void sendLoopEvent(const double &heartRate, const double &SpO2, const double temperature[2], const double bloodPressure[2], const double coords[2]) {
+        DynamicJsonDocument doc(512);
+        JsonArray arr = doc.to<JsonArray>();
+        arr.add("sendData");
+        JsonObject param1 = arr.createNestedObject();
+        param1["heartRate"] = heartRate;
+        param1["SpO2"] = SpO2;
+        param1["temperature"][0] = temperature[0];
+        param1["temperature"][1] = temperature[1];
+        param1["bloodPressure"][0] = bloodPressure[0];
+        param1["bloodPressure"][1] = bloodPressure[1];
+        param1["coords"][0] = coords[0];
+        param1["coords"][1] = coords[1];
+
+        String payload;
+        serializeJson(doc, payload);
+
+        bool success = IOC::client.sendEVENT(payload);
+
+        Serial.printf("[IOc] Sending Loop Event: %d\n", success);
+    }
+}
+
+#line 167 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
 void setup();
-#line 185 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
+#line 196 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
 double randomDouble(double minf, double maxf);
-#line 189 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
+#line 200 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
 void loop();
-#line 159 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
+#line 167 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
 void setup() {
     Serial.begin(115200);
 
@@ -174,13 +182,16 @@ void setup() {
     chipId = String(ESP.getEfuseMac(), HEX);
     chipId.toUpperCase();
 
-    WiFiManager wm;
-    wm.autoConnect();
+    WiFi.begin("MKL", "0919653280");
+    int currentState = WiFi.status();
+    while(currentState != WL_CONNECTED) {
+        Serial.printf("Connecting to wifi: %d\n", currentState);
+        currentState = WiFi.status();
+        delay(1000);
+    }
 
     IOC::init();
-#ifdef MEASURE_HR_SPO2
-    PO::init();
-#endif
+
 #ifdef MEASURE_TEMP
     TMP::init();
 #endif
@@ -196,18 +207,12 @@ double randomDouble(double minf, double maxf) {
 }
 
 void loop() {
-#ifdef MEASURE_HR_SPO2
-    PO::loop();
-#endif
-#ifdef MEASURE_TEMP
-    TMP::loop();
-#endif
-    IOC::loop();
-
     unsigned long now = millis();
 
     if(now - lastSent < interval)
         return;
+
+    IOC::loop();
 
     lastSent = now;
 
@@ -220,6 +225,13 @@ void loop() {
         Serial.printf("[IOc] Not connected to server\n");
         return;
     }
+
+#ifdef MEASURE_HR_SPO2
+    PO::loop();
+#endif
+#ifdef MEASURE_TEMP
+    TMP::loop();
+#endif
 
 #ifdef MEASURE_HR_SPO2
     heartRate = PO::heartRate;

@@ -1,5 +1,5 @@
 # 1 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
-
+// #define MEASURE_HR_SPO2
 
 // #define MEASURE_BP
 // #define GET_GPS
@@ -7,7 +7,7 @@
 // #define MEASURE_ECG
 
 
-# 10 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino" 2
+
 
 
 
@@ -21,8 +21,24 @@
 
 
 String chipId;
-String HOST = "192.168.0.100";
+String HOST = "192.168.219.236";
 int PORT = 3000;
+# 59 "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\sketch.ino"
+namespace TMP {
+    Adafruit_MLX90614 mlx;
+
+    double ambientTemp, objectTemp;
+
+    void init() {
+        mlx.begin();
+    }
+
+    void loop() {
+        ambientTemp = mlx.readAmbientTempC();
+        objectTemp = mlx.readObjectTempC();
+    }
+}
+
 
 namespace IOC {
     SocketIOclient client;
@@ -42,6 +58,10 @@ namespace IOC {
         }
 
         Serial.printf("[IOc] Successfully joined a room\n");
+
+
+
+
     }
 
     void handleDisconnect(uint8_t *payload, const size_t &length) {
@@ -75,7 +95,13 @@ namespace IOC {
         eventHandlers[getType(sIOtype_ERROR)] = &handleError;
         eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
 
-        client.begin(HOST, PORT, "/socket.io/?EIO=4");
+        client.begin(HOST.c_str(), PORT, "/socket.io/?EIO=4");
+
+        while(!client.isConnected()) {
+            Serial.printf("[IOc] Not connected to server\n");
+            delay(1000);
+        }
+
         client.onEvent(socketManager);
     }
 
@@ -106,57 +132,6 @@ namespace IOC {
     }
 }
 
-
-namespace PO {
-    double heartRate, SpO2;
-
-    void onBeatDetected() {
-        Serial.printf("Beat detected\n");
-    }
-
-    PulseOximeter pox;
-    void init() {
-        Serial.begin(115200);
-        pinMode(17, 0x03);
-
-        if(!pox.begin()) {
-            Serial.println("FAILED");
-            for(;;)
-                ;
-        } else {
-            Serial.println("SUCCESS");
-
-            pox.setOnBeatDetectedCallback(onBeatDetected);
-        }
-
-        pox.setIRLedCurrent(MAX30100_LED_CURR_7_6MA);
-    }
-
-    void loop() {
-        pox.update();
-        heartRate = pox.getHeartRate();
-        SpO2 = pox.getSpO2();
-    }
-}
-
-
-
-namespace TMP {
-    Adafruit_MLX90614 mlx;
-
-    double ambientTemp, objectTemp;
-
-    void init() {
-        mlx.begin();
-    }
-
-    void loop() {
-        ambientTemp = mlx.readAmbientTempC();
-        objectTemp = mlx.readObjectTempC();
-    }
-}
-
-
 void setup() {
     Serial.begin(115200);
 
@@ -166,12 +141,15 @@ void setup() {
     chipId = String(ESP.getEfuseMac(), 16);
     chipId.toUpperCase();
 
-    WiFiManager wm;
-    wm.autoConnect();
+    WiFi.begin("MKL", "0919653280");
+    int currentState = WiFi.status();
+    while(currentState != WL_CONNECTED) {
+        Serial.printf("Connecting to wifi: %d\n", currentState);
+        currentState = WiFi.status();
+        delay(1000);
+    }
 
     IOC::init();
-
-    PO::init();
 
 
     TMP::init();
@@ -188,18 +166,12 @@ double randomDouble(double minf, double maxf) {
 }
 
 void loop() {
-
-    PO::loop();
-
-
-    TMP::loop();
-
-    IOC::loop();
-
     unsigned long now = millis();
 
     if(now - lastSent < interval)
         return;
+
+    IOC::loop();
 
     lastSent = now;
 
@@ -214,11 +186,18 @@ void loop() {
     }
 
 
-    heartRate = PO::heartRate;
-    SpO2 = PO::SpO2;
 
 
 
+    TMP::loop();
+
+
+
+
+
+
+    heartRate = randomDouble(70, 80);
+    SpO2 = randomDouble(95, 100);
 
 
 

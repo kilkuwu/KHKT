@@ -10,9 +10,9 @@
     const ID = "<%= id %>"
   </script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="room.js" type="module"></script>
-  <link rel="stylesheet" href="room.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
+  <script src="room/room.js" type="module"></script>
+  <script src="room/room_script.js"></script>
+  <link rel="stylesheet" href="room/room.css">
 </head>
 
 <body>
@@ -24,11 +24,37 @@
     <div class="info" data-label="coordinates"></div>
   </div>
   <div id="visualized-data">
-    <div id="info-grid">
-      <div class="info" data-label="heartRate">75</div>
-      <div class="info" data-label="temperature">36</div>
-      <div class="info" data-label="bloodPressure">110 / 90</div>
-      <div class="info" data-label="spo2">96</div>
+    <div class="open-and-close" onclick="openOrClose(event)">
+      <div class="title-bar">HEART RATE<i class="fa-solid fa-caret-down"></i></div>
+      <div class="main-content heartRate">86</div>
+    </div>
+
+    <div class="open-and-close" onclick="openOrClose(event)">
+      <div class="title-bar">TEMPERATURE<i class="fa-solid fa-caret-down"></i></div>
+      <div class="main-content temperature">
+        <div class="ambient">20</div>
+        <div class="object">21</div>
+      </div>
+    </div>
+
+    <div class="open-and-close" onclick="openOrClose(event)">
+      <div class="title-bar">BLOOD PRESSURE<i class="fa-solid fa-caret-down"></i></div>
+      <div class="main-content bloodPressure">
+        <div class="sys">110</div>
+      <div class="dia">90</div>
+      </div>
+    </div>
+
+    <div class="open-and-close" onclick="openOrClose(event)">
+      <div class="title-bar">SPO2<i class="fa-solid fa-caret-down"></i></div>
+      <div class="main-content spo2">99</div>
+    </div>
+
+    <div class="open-and-close" onclick="openOrClose(event)">
+      <div class="title-bar">REALTIME GPS<i class="fa-solid fa-caret-down"></i></div>
+      <div class="main-content coords">
+        
+      </div>
     </div>
   </div>
 </body>
