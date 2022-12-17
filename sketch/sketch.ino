@@ -1,5 +1,5 @@
-// #define MEASURE_HR_SPO2
-// #define MEASURE_TEMP
+#define MEASURE_HR_SPO2
+#define MEASURE_TEMP
 // #define MEASURE_BP
 // #define GET_GPS
 // #define MEASURE_GAS
@@ -20,30 +20,32 @@
 #define str(x) String(x)
 
 String chipId;
-String HOST = "172.20.10.2";
+String HOST = "192.168.0.113";
 int PORT = 3000;
 
 namespace IOC {
     SocketIOclient client;
     const int numberOfEvents = 7;
+    bool joinedRoom = 0;
     void (*eventHandlers[numberOfEvents])(uint8_t *, const size_t &);
+
+    void joinRoom() {
+        String payload = str("[\"join\",\"") + chipId + "\"]";
+
+        joinedRoom = client.sendEVENT(payload);
+
+        if(joinedRoom)
+            Serial.printf("[IOc] Successfully joined a room\n");
+        else
+            Serial.printf("[IOc] Failed to join a room\n");
+    }
 
     void handleConnect(uint8_t *_, const size_t &length) {
         Serial.printf("[IOc] Connected to url: %s\n", _);
-
-        String payload = str("[\"join\",\"") + chipId + "\"]";
-
-        bool success = false;
-        while(!success) {
-            delay(1000);
-            Serial.printf("[IOc] Trying to join a room\n");
-            success = client.sendEVENT(payload);
-        }
-
-        Serial.printf("[IOc] Successfully joined a room\n");
     }
 
     void handleDisconnect(uint8_t *payload, const size_t &length) {
+        joinedRoom = 0;
         Serial.printf("[IOc] Disconnected!\n");
     }
 
@@ -136,6 +138,10 @@ namespace PO {
         heartRate = pox.getHeartRate();
         SpO2 = pox.getSpO2();
     }
+
+    void debug() {
+        Serial.printf("HR: %f ; SPO2: %f\n", heartRate, SpO2);
+    }
 }
 #endif
 
@@ -152,6 +158,10 @@ namespace TMP {
     void loop() {
         ambientTemp = mlx.readAmbientTempC();
         objectTemp = mlx.readObjectTempC();
+    }
+
+    void debug() {
+        Serial.printf("Ambient: %f ; Object: %f\n", ambientTemp, objectTemp);
     }
 }
 #endif
@@ -178,7 +188,7 @@ void setup() {
     IOC::init();
 }
 
-const unsigned long interval = 1000;
+const unsigned long interval = 250;
 unsigned long lastSent = 0;
 double heartRate, SpO2;
 double bloodPressure[2], coords[2], temperature[2];
@@ -213,9 +223,15 @@ void loop() {
         return;
     }
 
+    if(IOC::joinedRoom == 0) {
+        IOC::joinRoom();
+        return;
+    }
+
 #ifdef MEASURE_HR_SPO2
     heartRate = PO::heartRate;
     SpO2 = PO::SpO2;
+    // PO::debug();
 #else
     heartRate = randomDouble(70, 80);
     SpO2 = randomDouble(95, 100);
@@ -224,6 +240,7 @@ void loop() {
 #ifdef MEASURE_TEMP
     temperature[0] = TMP::ambientTemp;
     temperature[1] = TMP::objectTemp;
+    // TMP::debug();
 #else
     temperature[0] = randomDouble(35, 39);
     temperature[1] = randomDouble(35, 39);

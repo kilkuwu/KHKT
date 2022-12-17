@@ -12,7 +12,7 @@ html, body {
 }
 
 .open-and-close {
-  margin: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .open-and-close > .title-bar {
@@ -33,4 +33,9 @@ html, body {
 
 .open-and-close > .title-bar[data-state="close"] + .main-content {
   display: none;
+}
+
+#map {
+  aspect-ratio: 16/9;
+  margin: 1rem;
 }
