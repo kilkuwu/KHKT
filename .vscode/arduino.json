@@ -1,6 +1,7 @@
 {
-    "board": "arduino:samd:arduino_zero_native",
+    "board": "esp32:esp32:esp32wrover",
     "port": "COM3",
-    "sketch": "gps\\gps.ino",
-    "output": "sketch\\build"
+    "sketch": "sketch\\esp32\\sketch.ino",
+    "output": "sketch\\build",
+    "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none"
 }

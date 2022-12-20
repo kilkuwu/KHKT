@@ -1,0 +1,55 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css");
+
+#raw-data > .info::before {
+  content: attr(data-label);
+  padding-right: 10px;
+}
+
+html, body {
+  font-family: Roboto, Arial, Helvetica, sans-serif
+}
+
+.open-and-close {
+  margin-bottom: 0.5rem;
+}
+
+.open-and-close > .title-bar {
+  user-select: none;
+  cursor: pointer;
+  color: white;
+  text-align: left;
+  background-color: #111;
+  display: flex;
+  transition: all 0.25s;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem
+}
+
+.open-and-close > .title-bar > .fa-solid {
+  margin-left: auto;
+}
+
+.open-and-close > .title-bar[data-state="close"] + .main-content {
+  display: none;
+}
+
+#map {
+  aspect-ratio: 16/9;
+  margin: 1rem;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #1d1919;
+  min-height: 100vh;
+}
+
+#visualized-data {
+  flex: 1
+}

@@ -2,15 +2,275 @@
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.8.13\\cores\\arduino"
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\cores\\esp32"
   },
   {
     "Sourcefile": null,
     "Include": "",
-    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\samd\\1.8.13\\variants\\arduino_zero"
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\variants\\esp32"
   },
   {
-    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\gps.ino.cpp",
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "MAX30100_PulseOximeter.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\MAX30100lib\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "Adafruit_MLX90614.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_MLX90614_Library"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "Adafruit_I2CDevice.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_BusIO"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "Wire.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\Wire\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "ArduinoJson.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\ArduinoJson\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "SocketIOclient.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "WiFi.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "WiFiClientSecure.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFiClientSecure\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "WiFiManager.h",
+    "Includepath": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WiFiManager"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "Update.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\Update\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "WebServer.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WebServer\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "DNSServer.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\DNSServer\\src"
+  },
+  {
+    "Sourcefile": "c:\\Users\\kilkuwu\\Documents\\code\\khkt\\sketch\\build\\sketch\\sketch.ino.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\MAX30100lib\\src\\MAX30100.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\MAX30100lib\\src\\MAX30100_BeatDetector.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\MAX30100lib\\src\\MAX30100_PulseOximeter.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\MAX30100lib\\src\\MAX30100_SpO2Calculator.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_MLX90614_Library\\Adafruit_MLX90614.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_BusIO\\Adafruit_BusIO_Register.cpp",
+    "Include": "SPI.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\SPI\\src"
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_BusIO\\Adafruit_BusIO_Register.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_BusIO\\Adafruit_I2CDevice.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\Adafruit_BusIO\\Adafruit_SPIDevice.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\Wire\\src\\Wire.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\SocketIOclient.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\WebSockets.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\WebSocketsClient.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\WebSocketsServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\libb64\\cdecode.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\libb64\\cencode.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WebSockets\\src\\libsha1\\libsha1.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFi.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiAP.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiClient.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiMulti.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiSTA.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiScan.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFi\\src\\WiFiUdp.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFiClientSecure\\src\\WiFiClientSecure.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFiClientSecure\\src\\esp_crt_bundle.c",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WiFiClientSecure\\src\\ssl_client.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\Documents\\Arduino\\libraries\\WiFiManager\\WiFiManager.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\Update\\src\\HttpsOTAUpdate.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\Update\\src\\Updater.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WebServer\\src\\Parsing.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WebServer\\src\\WebServer.cpp",
+    "Include": "FS.h",
+    "Includepath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\FS\\src"
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WebServer\\src\\WebServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\WebServer\\src\\detail\\mimetable.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\DNSServer\\src\\DNSServer.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\SPI\\src\\SPI.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\FS\\src\\FS.cpp",
+    "Include": "",
+    "Includepath": null
+  },
+  {
+    "Sourcefile": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.5\\libraries\\FS\\src\\vfs_api.cpp",
     "Include": "",
     "Includepath": null
   }

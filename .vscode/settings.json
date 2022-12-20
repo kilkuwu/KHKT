@@ -1,5 +1,4 @@
 {
-  "C_Cpp.errorSquiggles": "Disabled",
   "editor.tabSize": 4,
   "files.associations": {
     "*.ejs": "html",
@@ -10,5 +9,8 @@
     "vector": "cpp",
     "string_view": "cpp",
     "initializer_list": "cpp"
-  }
+  },
+  "arduino.additionalUrls": [
+    "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
+  ]
 }
