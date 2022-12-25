@@ -26,8 +26,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-
 /* API ROUTES */
 const api = express.Router();
 api.use("/auth", authRoutes);
@@ -35,6 +33,13 @@ api.use("/user", userRoutes);
 api.use("/device", deviceRoutes);
 
 app.use("/api", api);
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 app.use(express.static(path.resolve(__dirname, "public")));
 
 /* Socket io setup */
