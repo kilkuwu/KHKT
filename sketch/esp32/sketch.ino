@@ -20,7 +20,7 @@
 #define str(x) String(x)
 
 String chipId;
-String HOST = "54.254.162.138";
+String HOST = "khkt-production.up.railway.app";
 int PORT = 3001;
 
 namespace IOC {
