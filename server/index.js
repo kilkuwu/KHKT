@@ -34,7 +34,7 @@ api.use("/user", userRoutes);
 api.use("/device", deviceRoutes);
 
 app.use("/api", api);
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "public")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
