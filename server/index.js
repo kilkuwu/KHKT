@@ -4,6 +4,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { Server } from "socket.io";
+import helmet from "helmet";
+import compression from "compression";
+
 import socketHandler from "./socketHandler.js";
 
 import http from "http";
@@ -19,8 +22,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(helmet());
+app.use(compression());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,9 +40,6 @@ api.use("/device", deviceRoutes);
 
 app.use("/api", api);
 app.use(express.static(path.resolve(__dirname, "public")));
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
 
 /* Socket io setup */
 const server = http.createServer(app);
