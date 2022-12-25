@@ -20,7 +20,7 @@
 #define str(x) String(x)
 
 String chipId;
-String HOST = "192.168.1.18";
+String HOST = "https://pamonitor.onrender.com";
 int PORT = 3001;
 
 namespace IOC {
