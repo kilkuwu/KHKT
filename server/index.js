@@ -4,7 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { Server } from "socket.io";
-import { readdirSync } from "fs";
 
 import socketHandler from "./socketHandler.js";
 
@@ -42,8 +41,6 @@ app.get("/*", function (req, res) {
 });
 
 app.use(express.static(path.resolve(__dirname, "public")));
-
-console.log(readdirSync());
 
 /* Socket io setup */
 const server = http.createServer(app);

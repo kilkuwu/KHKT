@@ -53,14 +53,13 @@ export default function Device() {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
           setDevice(response);
           setIsLoading(false);
         });
       return;
     }
 
-    socketRef.current = io(`http://${window.location.hostname}:3001`, {
+    socketRef.current = io({
       query: {
         id: deviceId,
         fromWeb: true,
