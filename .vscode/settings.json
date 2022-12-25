@@ -1,5 +1,5 @@
 {
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "files.associations": {
     "*.ejs": "html",
     "array": "cpp",
@@ -11,6 +11,7 @@
     "initializer_list": "cpp"
   },
   "arduino.additionalUrls": [
-    "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json"
+    "https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json",
+    "https://arduino.esp8266.com/stable/package_esp8266com_index.json"
   ]
 }
