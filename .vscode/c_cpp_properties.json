@@ -6,6 +6,8 @@
             "compilerPath": "C:\\Users\\kilkuwu\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\bin\\xtensa-lx106-elf-g++",
             "compilerArgs": [
                 "-U__STRICT_ANSI__",
+                "-w",
+                "-Werror=return-type",
                 "-free",
                 "-fipa-pta",
                 "-mlongcalls",
@@ -52,6 +54,8 @@
                 "TCP_MSS=536",
                 "LWIP_FEATURES=1",
                 "LWIP_IPV6=0",
+                "DEBUG_ESP_PORT=Serial",
+                "DEBUG_ESP_SSL",
                 "ARDUINO=10819",
                 "ARDUINO_ESP8266_NODEMCU_ESP12E",
                 "ARDUINO_ARCH_ESP8266",

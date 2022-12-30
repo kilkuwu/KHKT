@@ -5,25 +5,14 @@
 // #define MEASURE_GAS
 // #define MEASURE_ECG
 
-#ifdef MEASURE_HR_SPO2
-#include <MAX30100_PulseOximeter.h>
-#endif
-
-#ifdef MEASURE_TEMP
-#include <Adafruit_MLX90614.h>
-#endif
-
 #include <ArduinoJson.h>
 #include <SocketIOclient.h>
 #include <WiFiManager.h>
 
-#define str(x) String(x)
-
-String chipId;
-String HOST = "khkt-production.up.railway.app";
-int PORT = 3001;
-
 namespace IOC {
+String HOST = "pamonitor.onrender.com";
+int PORT = 443;
+
 SocketIOclient client;
 const int numberOfEvents = 7;
 void (*eventHandlers[numberOfEvents])(uint8_t *, const size_t &);
@@ -55,13 +44,18 @@ void socketManager(socketIOmessageType_t type, uint8_t *payload,
     }
 }
 
-void init() {
+void init(String &chipId) {
     eventHandlers[getType(sIOtype_CONNECT)] = &handleConnect;
     eventHandlers[getType(sIOtype_DISCONNECT)] = &handleDisconnect;
     eventHandlers[getType(sIOtype_ERROR)] = &handleError;
     eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
 
-    client.begin(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
+    // client.beginSSLWithCA(HOST.c_str(), PORT,
+    //                       (String("/socket.io/?EIO=4&id=") + chipId).c_str(),
+    //                       CA);
+    // Serial.printf("What the fuck bro");
+    // client.begin(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
+    client.beginSSL(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
     client.onEvent(socketManager);
 }
 
@@ -106,6 +100,8 @@ void sendBP(const double &systolic, const double &diastolic) {
 }  // namespace IOC
 
 #ifdef MEASURE_HR_SPO2
+#include <MAX30100_PulseOximeter.h>
+
 namespace PO {
 double heartRate, SpO2;
 
@@ -138,8 +134,9 @@ void loop() {
 void debug() { Serial.printf("HR: %f ; SPO2: %f\n", heartRate, SpO2); }
 }  // namespace PO
 #endif
-
 #ifdef MEASURE_TEMP
+#include <Adafruit_MLX90614.h>
+
 namespace TMP {
 Adafruit_MLX90614 mlx;
 
@@ -158,8 +155,12 @@ void debug() {
 }  // namespace TMP
 #endif
 
+String chipId;
+
 void setup() {
     Serial.begin(115200);
+
+    Serial.setDebugOutput(true);
 
     Serial.printf("\n\n\n");
     Serial.flush();
@@ -180,7 +181,7 @@ void setup() {
     TMP::init();
 #endif
 
-    IOC::init();
+    IOC::init(chipId);
 }
 
 const unsigned long interval = 1000, BPInterval = 60000;
@@ -218,9 +219,8 @@ void loop() {
     }
 
 #ifdef MEASURE_HR_SPO2
-    heartRate = PO::heartRate;
-    SpO2 = PO::SpO2;
-    // PO::debug();
+    hrAndSpO2[0] = PO::heartRate;
+    hrAndSpO2[1] = PO::SpO2;
 #else
     hrAndSpO2[0] = randomDouble(70, 80);
     hrAndSpO2[1] = randomDouble(95, 100);
@@ -229,7 +229,6 @@ void loop() {
 #ifdef MEASURE_TEMP
     temperature[0] = TMP::ambientTemp;
     temperature[1] = TMP::objectTemp;
-    // TMP::debug();
 #else
     temperature[0] = randomDouble(21, 22);
     temperature[1] = randomDouble(21, 22);
