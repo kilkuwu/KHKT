@@ -5,7 +5,10 @@ import {
   CardContent,
   Typography,
   Avatar,
+  Icon,
 } from "@mui/material";
+import { Add } from "@mui/icons-material";
+
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Loading from "components/Loading";
@@ -40,6 +43,29 @@ export default function Devices() {
 
   return (
     <Grid container columnSpacing={2} rowGap={2} mt={2}>
+      <Grid item xs={12}>
+        <Card
+          sx={{
+            bgcolor: "#f5f5f5",
+          }}
+        >
+          <CardActionArea component={RouterLink} to={"register-device"}>
+            <CardContent
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Icon color={"info"} fontSize="large">
+                <Add fontSize="inherit" />
+              </Icon>
+              <Typography color={"#1926d2"}>Add new device</Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grid>
       {devices.map((device) => {
         return (
           <Grid item xs={12} md={6}>

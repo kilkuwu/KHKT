@@ -6,7 +6,7 @@ import Device, { loader as deviceLoader } from "./root/devices/device";
 import ErrorPage from "./root/error-page";
 import Login from "./root/login";
 import Register from "./root/register";
-import RegisterDevice from "./root/register-device";
+import RegisterDevice from "./root/devices/register-device";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "./providers/authProvider";
@@ -41,7 +41,7 @@ const routes = [
     isSignedIn: true,
   },
   {
-    path: "/register-device",
+    path: "device/register-device",
     component: RegisterDevice,
     isSignedIn: true,
   },
