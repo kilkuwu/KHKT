@@ -55,20 +55,19 @@ export default function Devices() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                flexDirection: "column",
               }}
             >
-              <Icon color={"info"} fontSize="large">
-                <Add fontSize="inherit" />
+              <Icon sx={{ color: "#1976d2" }} fontSize="large">
+                <Add sx={{ pb: 0.5 }} color="inherit" fontSize="inherit" />
               </Icon>
-              <Typography color={"#1926d2"}>Add new device</Typography>
+              <Typography color={"#1976d2"}>Thêm thiết bị</Typography>
             </CardContent>
           </CardActionArea>
         </Card>
       </Grid>
-      {devices.map((device) => {
+      {devices.map((device, id) => {
         return (
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} key={id}>
             <Card sx={{ bgcolor: "#f5f5f5" }}>
               <CardActionArea component={RouterLink} to={device._id}>
                 <CardContent>

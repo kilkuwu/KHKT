@@ -12,20 +12,20 @@ import post2 from "../blogs/blog-post.2.md";
 import post3 from "../blogs/blog-post.3.md";
 
 const mainFeaturedPost = {
-  title: "Title of a longer featured blog post",
+  title: "Vòng đeo tay định vị, theo dõi sức khỏe phục vụ cho y tế",
   description:
-    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
+    "Nếu ý tưởng tạo ra “Vòng đeo tay định vị, theo dõi sức khỏe cho đối tượng cách ly và bệnh nhân mắc COVID-19” đảm bảo được các yêu cầu thiết yếu về kĩ thuật và tiêu chuẩn thì thiết bị này sẽ một phần nào đó giúp các cơ quan chức năng dễ dàng và thuận lợi trong việc kiểm soát các đối tượng cách ly và bệnh nhân COVID-19.",
   image: "https://source.unsplash.com/random",
   imageText: "main image description",
-  linkText: "Continue reading…",
+  linkText: "Đọc tiếp...",
 };
 
 const featuredPosts = [
   {
-    title: "Featured post",
-    date: "Nov 12",
+    title: "Lý do chọn đề tài",
+    date: "30 tháng 12",
     description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+      "Đề tài y tế đã, đang và luôn là vấn đề được bàn tán rất nhiều trong thời gian vừa qua. Chúng em, với mong muốn giúp các y bác sĩ đạt hiệu quả cao hơn trong việc quan sát và chăm sóc bệnh nhân, chúng em đã tạo ra sản phẩm vòng tay thông minh này.",
     image: "https://source.unsplash.com/random",
     imageLabel: "Image Text",
   },
