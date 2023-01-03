@@ -185,6 +185,72 @@ export function OneAxisChart({
   );
 }
 
+export function OneAxisOneLineChart({
+  data,
+  title,
+  yAxisLabel,
+  legendTitle1,
+  dataKey1,
+}) {
+  return (
+    <Box
+      height={"500px"}
+      m={2}
+      bgcolor={"#f5f5f5"}
+      pb={10}
+      pt={2}
+      borderRadius={4}
+    >
+      <Typography
+        align="center"
+        variant="h6"
+        fontWeight={"medium"}
+        fontStyle={"italic"}
+        py={2}
+      >
+        {title}
+      </Typography>
+
+      <ResponsiveContainer width="100%">
+        <LineChart
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis />
+          <YAxis
+            domain={[
+              (dataMin) => Math.floor(dataMin),
+              (dataMax) => Math.ceil(dataMax),
+            ]}
+          >
+            <Label
+              style={{ textAnchor: "middle", fontStyle: "italic" }}
+              position={"insideLeft"}
+              angle={-90}
+              value={yAxisLabel}
+            />
+          </YAxis>
+          <CTooltip />
+          <Line
+            isAnimationActive={false}
+            type="monotone"
+            dataKey={dataKey1}
+            name={legendTitle1}
+            stroke="#8884d8"
+            strokeWidth={"4px"}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </Box>
+  );
+}
+
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (

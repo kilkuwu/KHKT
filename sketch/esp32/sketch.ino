@@ -2,16 +2,21 @@
 // #define MEASURE_TEMP
 // #define MEASURE_BP
 // #define GET_GPS
-// #define MEASURE_GAS
 // #define MEASURE_ECG
+#define PROD
 
 #include <ArduinoJson.h>
 #include <SocketIOclient.h>
 #include <WiFiManager.h>
 
 namespace IOC {
-String HOST = "pamonitor.onrender.com";
+#ifdef PROD
+String HOST = "pamonitor.kilk.ml";
 int PORT = 443;
+#else
+String HOST = "192.168.235.236";
+int PORT = 3001;
+#endif
 
 SocketIOclient client;
 const int numberOfEvents = 7;
@@ -50,11 +55,6 @@ void init(String &chipId) {
     eventHandlers[getType(sIOtype_ERROR)] = &handleError;
     eventHandlers[getType(sIOtype_EVENT)] = &handleEvent;
 
-    // client.beginSSLWithCA(HOST.c_str(), PORT,
-    //                       (String("/socket.io/?EIO=4&id=") + chipId).c_str(),
-    //                       CA);
-    // Serial.printf("What the fuck bro");
-    // client.begin(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
     client.beginSSL(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
     client.onEvent(socketManager);
 }
@@ -62,7 +62,7 @@ void init(String &chipId) {
 void loop() { IOC::client.loop(); }
 
 void sendLoopEvent(const double hrAndSpO2[2], const double temperature[2],
-                   const double coords[2]) {
+                   const double coords[2], const double &ECG) {
     DynamicJsonDocument doc(512);
     JsonArray arr = doc.to<JsonArray>();
     arr.add("sendData");
@@ -73,6 +73,7 @@ void sendLoopEvent(const double hrAndSpO2[2], const double temperature[2],
     param1["temperature"][1] = temperature[1];
     param1["coords"][0] = coords[0];
     param1["coords"][1] = coords[1];
+    param1["ECG"] = ECG;
 
     String payload;
     serializeJson(doc, payload);
@@ -154,6 +155,9 @@ void debug() {
 }
 }  // namespace TMP
 #endif
+#ifdef MEASURE_ECG
+
+#endif
 
 String chipId;
 
@@ -186,7 +190,7 @@ void setup() {
 
 const unsigned long interval = 1000, BPInterval = 60000;
 unsigned long lastSent = 0, lastBPSent = 0;
-double hrAndSpO2[2], bloodPressure[2], coords[2], temperature[2];
+double hrAndSpO2[2], bloodPressure[2], coords[2], temperature[2], ECG;
 
 double randomDouble(double minf, double maxf) {
     return minf + random(1UL << 31) * (maxf - minf) /
@@ -194,6 +198,9 @@ double randomDouble(double minf, double maxf) {
 }
 
 void loop() {
+#ifdef MEASURE_ECG
+    ECG::loop();
+#endif
 #ifdef MEASURE_HR_SPO2
     PO::loop();
 #endif
@@ -237,7 +244,9 @@ void loop() {
     coords[0] = randomDouble(18.50, 18.51);
     coords[1] = randomDouble(105.05, 105.1);
 
-    IOC::sendLoopEvent(hrAndSpO2, temperature, coords);
+    ECG = randomDouble(50, 128);
+
+    IOC::sendLoopEvent(hrAndSpO2, temperature, coords, ECG);
 
     if (now - lastBPSent < BPInterval) return;
     lastBPSent = now;
