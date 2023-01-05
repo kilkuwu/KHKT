@@ -14,29 +14,46 @@ const options = {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "h4",
-        component: "h1",
+        variant: "h2",
       },
     },
     h2: {
       component: Typography,
-      props: { gutterBottom: true, variant: "h6", component: "h2" },
+      props: { gutterBottom: true, variant: "h3" },
     },
     h3: {
       component: Typography,
-      props: { gutterBottom: true, variant: "subtitle1" },
+      props: { gutterBottom: true, variant: "h4" },
     },
     h4: {
       component: Typography,
       props: {
         gutterBottom: true,
-        variant: "caption",
-        paragraph: true,
+        variant: "h5",
+      },
+    },
+    h5: {
+      component: Typography,
+      props: {
+        gutterBottom: true,
+        variant: "h6",
+      },
+    },
+    h6: {
+      component: Typography,
+      props: {
+        gutterBottom: true,
+        variant: "subtitle1",
       },
     },
     p: {
       component: Typography,
-      props: { paragraph: true },
+      props: {
+        gutterBottom: true,
+        variant: "h6",
+        fontWeight: "normal",
+        paragraph: true,
+      },
     },
     a: { component: Link },
     li: {

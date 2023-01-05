@@ -1,13 +1,13 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import { Card, CardActionArea, CardContent, Icon } from "@mui/material";
 
 function Sidebar(props) {
-  const { archives, description, social, title } = props;
+  const { description, social, title } = props;
 
   return (
     <Grid item xs={12} md={4}>
@@ -18,34 +18,33 @@ function Sidebar(props) {
         <Typography>{description}</Typography>
       </Paper>
       <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-        Archives
-      </Typography>
-      {archives.map((archive) => (
-        <Link
-          display="block"
-          variant="body1"
-          href={archive.url}
-          key={archive.title}
-        >
-          {archive.title}
-        </Link>
-      ))}
-
-      <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
         Social
       </Typography>
-      {social.map((network) => (
+      {social.map((network, id) => (
         <Link
           display="block"
           variant="body1"
-          href="#"
-          key={network.name}
+          href={network.link}
+          key={id}
           sx={{ mb: 0.5 }}
         >
-          <Stack direction="row" spacing={1} alignItems="center">
-            <network.icon />
-            <span>{network.name}</span>
-          </Stack>
+          <Card direction="row" spacing={1} alignItems="center">
+            <CardActionArea>
+              <CardContent
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Icon sx={{ mr: 2 }}>
+                  <network.icon />
+                </Icon>
+                <Typography>
+                  <span>{network.name}</span>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         </Link>
       ))}
     </Grid>

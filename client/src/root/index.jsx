@@ -2,66 +2,56 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import MainFeaturedPost from "../components/Blog/MainFeaturedPost";
-import FeaturedPost from "../components/Blog/FeaturedPost";
 import Main from "../components/Blog/Main";
 import Sidebar from "../components/Blog/Sidebar";
-import post1 from "../blogs/blog-post.1.md";
-import post2 from "../blogs/blog-post.2.md";
-import post3 from "../blogs/blog-post.3.md";
 
 const mainFeaturedPost = {
-  title: "Vòng đeo tay định vị, theo dõi sức khỏe phục vụ cho y tế",
+  title:
+    "PaWatch - Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà",
   description:
-    "Nếu ý tưởng tạo ra “Vòng đeo tay định vị, theo dõi sức khỏe cho đối tượng cách ly và bệnh nhân mắc COVID-19” đảm bảo được các yêu cầu thiết yếu về kĩ thuật và tiêu chuẩn thì thiết bị này sẽ một phần nào đó giúp các cơ quan chức năng dễ dàng và thuận lợi trong việc kiểm soát các đối tượng cách ly và bệnh nhân COVID-19.",
-  image: "https://source.unsplash.com/random",
+    "Nếu ý tưởng tạo ra “Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà” đảm bảo được các yêu cầu thiết yếu về kĩ thuật và tiêu chuẩn thì thiết bị này sẽ một phần nào đó giúp các y bác sĩ dễ dàng trong việc kiểm soát, đưa ra các pháp đồ điều trị thích hợp, giúp các bác sĩ tiết kiệm nhân lực, hạn chế quá tải ở các bệnh viện và giúp các chuyên viên y tế định vị bệnh nhân nhằm cấp cứu kịp thời cho các bệnh nhân đang gặp nguy hiểm.",
+  image: "/medical-background.jpg",
   imageText: "main image description",
-  linkText: "Đọc tiếp...",
 };
 
-const featuredPosts = [
+const posts = [
   {
+    id: "ly-do-chon-de-tai",
     title: "Lý do chọn đề tài",
-    date: "30 tháng 12",
     description:
-      "Đề tài y tế đã, đang và luôn là vấn đề được bàn tán rất nhiều trong thời gian vừa qua. Chúng em, với mong muốn giúp các y bác sĩ đạt hiệu quả cao hơn trong việc quan sát và chăm sóc bệnh nhân, chúng em đã tạo ra sản phẩm vòng tay thông minh này.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
+      "Truyền thông, internet phát triển, mọi thứ chúng ta cần biết bây giờ chỉ đơn giản là một cú nhấp chuột. Bị bệnh, tự chẩn đoán, tự kê đơn và tự dùng thuốc là một thực tế rất phổ biến, dễ dàng, ít tốn kém nhưng việc làm này có thể gây ra nhiều hậu quả hơn là lợi ích.",
   },
   {
-    title: "Post title",
-    date: "Nov 11",
+    id: "anh-huong-tieu-cuc-cua-viec-tu-chua-benh-tai-nha-den-benh-nhan",
+    title: "Ảnh hưởng tiêu cực của việc tự chữa bệnh tại nhà đến bệnh nhân",
     description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/random",
-    imageLabel: "Image Text",
+      "Hiện nay, thực trạng nhiều người có triệu chứng đau ốm tự đoán bệnh và tự điều trị tại nhà rất phổ biến; hoặc các trường hợp khác hỏi ý kiến những người không có chuyên môn hay dược sĩ tại hiệu thuốc thay vì đi khám ở các cơ sở y tế.",
+  },
+  {
+    id: "khai-quat-ve-thiet-bi-ho-tro-theo-doi-suc-khoe-cap-cuu-cho-benh-nhan-dieu-tri-tai-nha",
+    title:
+      "Khái quát về “Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà”",
+    description:
+      "Thiết bị “Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà” được chế tạo từ những Module cảm biến như: Module WiFi ESP32; cảm biến nhiệt không chạm MLX9060; cảm biến nhịp tim và oxi trong máu MAX30100; mạch GPS; cảm biến điện nhịp ECG AD8232 và các linh kiện khác.",
   },
 ];
 
-const posts = [post1, post2, post3];
-
 const sidebar = {
-  title: "About",
+  title: "Pamonitor là gì?",
   description:
-    "Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.",
-  archives: [
-    { title: "March 2020", url: "#" },
-    { title: "February 2020", url: "#" },
-    { title: "January 2020", url: "#" },
-    { title: "November 1999", url: "#" },
-    { title: "October 1999", url: "#" },
-    { title: "September 1999", url: "#" },
-    { title: "August 1999", url: "#" },
-    { title: "July 1999", url: "#" },
-    { title: "June 1999", url: "#" },
-    { title: "May 1999", url: "#" },
-    { title: "April 1999", url: "#" },
-  ],
+    "Pamonitor là trang web mã nguồn mở được chúng tôi thiết kế dành riêng cho PaWatch – “Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà”, với mục tiêu tạo ra một giao diện thân thiện, dễ dàng cho việc quản lý thiết bị từ xa; thu thập, xử lý và trực quan hóa dữ liệu y tế.",
   social: [
-    { name: "GitHub", icon: GitHubIcon },
-    { name: "Twitter", icon: TwitterIcon },
-    { name: "Facebook", icon: FacebookIcon },
+    {
+      name: "GitHub",
+      icon: GitHubIcon,
+      link: "https://github.com/kilkuwu/KHKT",
+    },
+    {
+      name: "Facebook",
+      icon: FacebookIcon,
+      link: "https://www.facebook.com/profile.php?id=100036601175238",
+    },
   ],
 };
 
@@ -69,17 +59,11 @@ export default function Blog() {
   return (
     <>
       <MainFeaturedPost post={mainFeaturedPost} />
-      <Grid container spacing={4}>
-        {featuredPosts.map((post) => (
-          <FeaturedPost key={post.title} post={post} />
-        ))}
-      </Grid>
       <Grid container spacing={5} sx={{ mt: 3 }}>
-        <Main title="From the firehose" posts={posts} />
+        <Main title="Các blog nổi bật" posts={posts} />
         <Sidebar
           title={sidebar.title}
           description={sidebar.description}
-          archives={sidebar.archives}
           social={sidebar.social}
         />
       </Grid>

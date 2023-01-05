@@ -1,42 +1,39 @@
-import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import Markdown from "./Markdown";
+import { Card, CardActionArea, CardContent } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 function Main(props) {
   const { posts, title } = props;
-  const [_posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    Promise.all(posts.map((_post) => fetch(_post)))
-      .then((fetchedPosts) =>
-        Promise.all(fetchedPosts.map((fetchedPost) => fetchedPost.text()))
-      )
-      .then((textPosts) => setPosts(textPosts));
-  }, [posts]);
 
   return (
-    <Grid
-      item
-      xs={12}
-      md={8}
-      sx={{
-        "& .markdown": {
-          py: 3,
-        },
-      }}
-    >
+    <Grid item xs={12} md={8} rowGap={2}>
       <Typography variant="h6" gutterBottom>
         {title}
       </Typography>
       <Divider />
-      {_posts.map((post, index) => (
-        <Markdown className="markdown" key={index}>
-          {post}
-        </Markdown>
-      ))}
+      <Grid item xs={12}>
+        {posts.map((post, index) => (
+          <Card
+            sx={{ my: 1, background: "rgb(0, 0, 0, .05)" }}
+            direction="row"
+            key={index}
+            spacing={1}
+            alignItems="center"
+          >
+            <CardActionArea component={RouterLink} to={`blog/${post.id}`}>
+              <CardContent>
+                <Typography variant="h6">{post.title}</Typography>
+                <Typography noWrap variant="subtitle1">
+                  {post.description}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        ))}
+      </Grid>
     </Grid>
   );
 }

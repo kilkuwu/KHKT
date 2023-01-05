@@ -15,14 +15,13 @@ function MainFeaturedPost(props) {
         position: "relative",
         backgroundColor: "grey.800",
         color: "#fff",
-        mb: 4,
+        mb: 1,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundImage: `url(${post.image})`,
       }}
     >
-      {/* Increase the priority of the hero background image */}
       {
         <img
           style={{ display: "none" }}
@@ -41,7 +40,7 @@ function MainFeaturedPost(props) {
         }}
       />
       <Grid container>
-        <Grid item md={6}>
+        <Grid item md={8}>
           <Box
             sx={{
               position: "relative",

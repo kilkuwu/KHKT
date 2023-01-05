@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Root from "./root";
 import Devices from "./root/devices";
 import Device, { loader as deviceLoader } from "./root/devices/device";
+import Blog, { loader as blogLoader } from "root/blog";
 import ErrorPage from "./root/error-page";
 import Login from "./root/login";
 import Register from "./root/register";
@@ -44,6 +45,11 @@ const routes = [
     path: "device/register-device",
     component: RegisterDevice,
     isSignedIn: true,
+  },
+  {
+    path: "blog/:blogId",
+    loader: blogLoader,
+    component: Blog,
   },
 ];
 
