@@ -17,7 +17,7 @@ function Main(props) {
       <Grid item xs={12}>
         {posts.map((post, index) => (
           <Card
-            sx={{ my: 1, background: "rgb(0, 0, 0, .05)" }}
+            sx={{ my: 1, background: "rgb(0, 0, 0, .025)" }}
             direction="row"
             key={index}
             spacing={1}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <script>
+      const socket = io({
+        query: {
+          id: "CF3CA7",
+        },
+      });
+
+      const rand = (min, max) => Math.random() * (max - min) + min;
+      const randInt = (min, max) => {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      };
+
+      setInterval(() => {
+        console.log("nice");
+        socket.emit("sendData", {
+          hrAndSpO2: [rand(58, 59), rand(98, 99)],
+          temperature: [rand(408, 409), rand(35.1, 35.2)],
+          coords: [18.524177, 105.5793148],
+          ECG: rand(100, 102),
+        });
+      }, 100);
+    </script>
+  </body>
+</html>

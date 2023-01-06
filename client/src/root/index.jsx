@@ -35,6 +35,12 @@ const posts = [
     description:
       "Thiết bị “Thiết bị hỗ trợ theo dõi sức khỏe, cấp cứu cho bệnh nhân điều trị tại nhà” được chế tạo từ những Module cảm biến như: Module WiFi ESP32; cảm biến nhiệt không chạm MLX9060; cảm biến nhịp tim và oxi trong máu MAX30100; mạch GPS; cảm biến điện nhịp ECG AD8232 và các linh kiện khác.",
   },
+  {
+    id: "nguyen-ly-hoat-dong",
+    title: "Nguyên lý hoạt động",
+    description:
+      "Thiết bị PaWatch hoạt động dưới sự điều khiển của trang web Pamonitor qua internet và SIM GMS.",
+  },
 ];
 
 const sidebar = {
@@ -59,7 +65,7 @@ export default function Blog() {
   return (
     <>
       <MainFeaturedPost post={mainFeaturedPost} />
-      <Grid container spacing={5} sx={{ mt: 3 }}>
+      <Grid container spacing={5} sx={{ my: 3 }}>
         <Main title="Các blog nổi bật" posts={posts} />
         <Sidebar
           title={sidebar.title}

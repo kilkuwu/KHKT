@@ -34,6 +34,8 @@ api.use("/device", deviceRoutes);
 
 app.use("/api", api);
 
+app.use("/random", express.static("random.html"));
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/*", function (req, res) {

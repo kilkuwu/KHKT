@@ -21,14 +21,13 @@ function Sidebar(props) {
         Social
       </Typography>
       {social.map((network, id) => (
-        <Link
-          display="block"
-          variant="body1"
-          href={network.link}
-          key={id}
-          sx={{ mb: 0.5 }}
-        >
-          <Card direction="row" spacing={1} alignItems="center">
+        <Link href={network.link} key={id} sx={{ mb: 0.5 }}>
+          <Card
+            sx={{ color: "inherit" }}
+            direction="row"
+            spacing={1}
+            alignItems="center"
+          >
             <CardActionArea>
               <CardContent
                 sx={{
@@ -36,7 +35,7 @@ function Sidebar(props) {
                   alignItems: "center",
                 }}
               >
-                <Icon sx={{ mr: 2 }}>
+                <Icon sx={{ mr: 2, color: "black" }}>
                   <network.icon />
                 </Icon>
                 <Typography>

@@ -100,7 +100,12 @@ export default function Device() {
             coordX: coords[0],
             coordY: coords[1],
           },
-          ECGs: [...prev.ECGs.slice(prev.ECGs.length - MAX_DATA + 1), ECG],
+          ECGs: [
+            ...prev.ECGs.slice(prev.ECGs.length - MAX_DATA + 1),
+            {
+              ECG: ECG,
+            },
+          ],
         };
       });
     });

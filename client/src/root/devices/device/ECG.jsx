@@ -11,7 +11,7 @@ import { OneAxisOneLineChart } from "./CustomCharts";
 
 export default function ECG({ ECGs }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
-
+  console.log(ECGs);
   const handleClick = () => {
     setIsCollapsed((prev) => !prev);
   };

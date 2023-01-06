@@ -16,7 +16,7 @@ import {
   Thermostat,
 } from "@mui/icons-material";
 import { useState } from "react";
-import { OneAxisChart } from "./CustomCharts";
+import { DoubleAxisChart } from "./CustomCharts";
 
 export default function Temperature({ temperatures }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -40,7 +40,7 @@ export default function Temperature({ temperatures }) {
         <ListItemIcon>
           <Thermostat />
         </ListItemIcon>
-        <ListItemText primary={"Nhiệt độ"} />
+        <ListItemText primary={"Chất lượng không khí, nhiệt độ cơ thể"} />
         <Tooltip title="Mở đồ thị">
           <IconButton onClick={handleChartOpen}>
             <BarChartRounded />
@@ -64,24 +64,25 @@ export default function Temperature({ temperatures }) {
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
               primary={ambientTemperature}
-              secondary={"Nhiệt độ môi trường"}
+              secondary={"Chất lượng không khí (PPM)"}
             />
           </ListItem>
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
               primary={objectTemperature}
-              secondary={"Nhiệt độ cơ thể"}
+              secondary={"Nhiệt độ cơ thể (°C)"}
             />
           </ListItem>
         </List>
         <Collapse in={chartOpen} timeout="auto" unmountOnExit>
-          <OneAxisChart
+          <DoubleAxisChart
             data={temperatures}
-            title={"Đồ thị nhiệt độ"}
-            yAxisLabel={"Nhiệt độ (°C)"}
-            dataKey1={"ambientTemperature"}
-            dataKey2={"objectTemperature"}
-            legendTitle1={"Nhiệt độ môi trường"}
+            title={"Đồ thị nhiệt độ, chất lượng không khí"}
+            yAxisLeftLabel={"Nhiệt độ (°C)"}
+            yAxisRightLabel={"Chất lượng không khí (PPM)"}
+            dataKey1={"objectTemperature"}
+            dataKey2={"ambientTemperature"}
+            legendTitle1={"Chất lượng không khí"}
             legendTitle2={"Nhiệt độ cơ thể"}
           />
         </Collapse>
