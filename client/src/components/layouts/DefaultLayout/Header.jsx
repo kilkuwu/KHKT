@@ -36,7 +36,11 @@ function Header({ showLogInButton = true }) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Avatar src={"/logo192.png"} sx={{ mr: 1, cursor: "pointer" }} />
+        <Avatar
+          onClick={() => navigate("/")}
+          src={"/logo192.png"}
+          sx={{ mr: 1, cursor: "pointer" }}
+        />
         <Typography
           component="h2"
           variant="h5"
@@ -45,10 +49,10 @@ function Header({ showLogInButton = true }) {
           noWrap
           fontWeight="bold"
           sx={{ flex: 1, cursor: "pointer" }}
+          onClick={() => navigate("/")}
         >
           Pamonitor
         </Typography>
-
         <IconButton>
           <SearchIcon />
         </IconButton>
