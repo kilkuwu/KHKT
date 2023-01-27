@@ -55,10 +55,13 @@ export function DoubleAxisChart({
           <XAxis />
           <YAxis
             yAxisId="left"
-            domain={[
-              (dataMin) => Math.floor(dataMin),
-              (dataMax) => Math.ceil(dataMax),
-            ]}
+            domain={([dataMin, dataMax]) => {
+              dataMin = Math.floor(dataMin);
+              dataMax = Math.ceil(dataMax);
+              const diff = Math.abs(dataMin - dataMax) / 2;
+
+              return [Math.max(0, dataMin - diff), dataMax + diff];
+            }}
           >
             <Label
               style={{ textAnchor: "middle", fontStyle: "italic" }}
@@ -69,10 +72,13 @@ export function DoubleAxisChart({
           </YAxis>
           <YAxis
             yAxisId="right"
-            domain={[
-              (dataMin) => Math.floor(dataMin),
-              (dataMax) => Math.ceil(dataMax),
-            ]}
+            domain={([dataMin, dataMax]) => {
+              dataMin = Math.floor(dataMin);
+              dataMax = Math.ceil(dataMax);
+              const diff = Math.abs(dataMin - dataMax) / 2;
+
+              return [Math.max(0, dataMin - diff), dataMax + diff];
+            }}
             orientation="right"
           >
             <Label
@@ -87,7 +93,6 @@ export function DoubleAxisChart({
           <Line
             isAnimationActive={false}
             yAxisId="left"
-            type="monotone"
             dataKey={dataKey1}
             name={legendTitle1}
             stroke="#8884d8"
@@ -96,7 +101,6 @@ export function DoubleAxisChart({
           <Line
             isAnimationActive={false}
             yAxisId="right"
-            type="monotone"
             dataKey={dataKey2}
             name={legendTitle2}
             stroke="#82ca9d"
@@ -149,10 +153,13 @@ export function OneAxisChart({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis />
           <YAxis
-            domain={[
-              (dataMin) => Math.floor(dataMin),
-              (dataMax) => Math.ceil(dataMax),
-            ]}
+            domain={([dataMin, dataMax]) => {
+              dataMin = Math.floor(dataMin);
+              dataMax = Math.ceil(dataMax);
+              const diff = Math.abs(dataMin - dataMax) / 2;
+
+              return [Math.max(0, dataMin - diff), dataMax + diff];
+            }}
           >
             <Label
               style={{ textAnchor: "middle", fontStyle: "italic" }}
@@ -165,7 +172,6 @@ export function OneAxisChart({
           <Legend />
           <Line
             isAnimationActive={false}
-            type="monotone"
             dataKey={dataKey1}
             name={legendTitle1}
             stroke="#8884d8"
@@ -173,7 +179,6 @@ export function OneAxisChart({
           />
           <Line
             isAnimationActive={false}
-            type="monotone"
             dataKey={dataKey2}
             name={legendTitle2}
             stroke="#82ca9d"
@@ -224,10 +229,13 @@ export function OneAxisOneLineChart({
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis />
           <YAxis
-            domain={[
-              (dataMin) => Math.floor(dataMin),
-              (dataMax) => Math.ceil(dataMax),
-            ]}
+            domain={([dataMin, dataMax]) => {
+              dataMin = Math.floor(dataMin);
+              dataMax = Math.ceil(dataMax);
+              const diff = Math.abs(dataMin - dataMax) / 2;
+
+              return [Math.max(0, dataMin - diff), dataMax + diff];
+            }}
           >
             <Label
               style={{ textAnchor: "middle", fontStyle: "italic" }}
@@ -239,7 +247,6 @@ export function OneAxisOneLineChart({
           <CTooltip />
           <Line
             isAnimationActive={false}
-            type="monotone"
             dataKey={dataKey1}
             name={legendTitle1}
             stroke="#8884d8"

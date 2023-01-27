@@ -14,6 +14,8 @@ export async function loader({ params }) {
 
 const MAX_DATA = 50;
 
+// best name =
+
 export default function Device() {
   const deviceId = useLoaderData();
 
@@ -23,12 +25,11 @@ export default function Device() {
 
   const [connected, setConnected] = useState(false);
 
-  const [realtimeData, setRealtimeData] = useState({
-    hrSpO2s: [],
-    temperatures: [],
-    ECGs: [],
-    coordinates: {},
-  });
+  const [hrSpO2s, setHRSpO2s] = useState([]);
+  const [temperatures, setTemperatures] = useState([]);
+  const [ECGs, setECGs] = useState([]);
+  const [coordinates, setCoordinates] = useState([]);
+
   const [device, setDevice] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [forbidden, setForbidden] = useState(false);
@@ -39,8 +40,8 @@ export default function Device() {
       return;
     }
 
-    if (isLoading) {
-      fetch(`/api/device/${deviceId}`, {
+    const fetchDevice = async () => {
+      const response = await fetch(`/api/device/${deviceId}`, {
         method: "GET",
         withCredentials: true,
         credentials: "include",
@@ -48,15 +49,15 @@ export default function Device() {
           Authorization: "Bearer " + auth.token,
           "Content-Type": "application/json",
         },
-      })
-        .then((response) => {
-          if (!response.ok) setForbidden(true);
-          return response.json();
-        })
-        .then((response) => {
-          setDevice(response);
-          setIsLoading(false);
-        });
+      });
+      if (!response.ok) setForbidden(true);
+      const jsonResponse = await response.json();
+      setDevice(jsonResponse);
+      setIsLoading(false);
+    };
+
+    if (isLoading) {
+      fetchDevice();
       return;
     }
 
@@ -66,48 +67,47 @@ export default function Device() {
         fromWeb: true,
       },
     });
-
     const { current: socket } = socketRef;
 
-    socket.on("connect", () => {
-      setConnected(true);
+    socket.on("connect", () => setConnected(true));
+    socket.on("disconnect", () => setConnected(false));
+
+    socket.on("iot-sendHRSpO2", (heartRate, spO2) =>
+      setHRSpO2s((prev) => [
+        ...prev.slice(-MAX_DATA),
+        {
+          heartRate,
+          spO2,
+        },
+      ])
+    );
+
+    socket.on("iot-sendTemp", (airQuality, temperature) => {
+      setTemperatures((prev) => [
+        ...prev.slice(-MAX_DATA),
+        {
+          airQuality,
+          temperature,
+        },
+      ]);
     });
 
-    socket.on("disconnect", () => {
-      setConnected(false);
-    });
+    socket.on("iot-sendCoords", (coordX, coordY) =>
+      setCoordinates((prev) => [
+        ...prev.slice(-MAX_DATA),
+        {
+          coordX,
+          coordY,
+        },
+      ])
+    );
 
-    socket.on("iot-sendData", (sentData) => {
-      const { hrAndSpO2, temperature, coords, ECG } = sentData;
+    socket.on("iot-sendECG", (ecg) =>
+      setECGs((prev) => [...prev.slice(-MAX_DATA), { ecg }])
+    );
 
-      setRealtimeData((prev) => {
-        return {
-          hrSpO2s: [
-            ...prev.hrSpO2s.slice(prev.hrSpO2s.length - MAX_DATA + 1),
-            {
-              heartRate: hrAndSpO2[0],
-              spO2: hrAndSpO2[1],
-            },
-          ],
-          temperatures: [
-            ...prev.temperatures.slice(prev.temperatures.length - MAX_DATA + 1),
-            {
-              ambientTemperature: temperature[0],
-              objectTemperature: temperature[1],
-            },
-          ],
-          coordinates: {
-            coordX: coords[0],
-            coordY: coords[1],
-          },
-          ECGs: [
-            ...prev.ECGs.slice(prev.ECGs.length - MAX_DATA + 1),
-            {
-              ECG: ECG,
-            },
-          ],
-        };
-      });
+    socket.on("iot-sendBP", () => {
+      fetchDevice();
     });
 
     return () => {
@@ -139,7 +139,10 @@ export default function Device() {
         )}
       </Typography>
       <RawVisualizedData
-        data={realtimeData}
+        hrSpO2s={hrSpO2s}
+        temperatures={temperatures}
+        ECGs={ECGs}
+        coordinates={coordinates}
         bloodPressures={device ? device.bloodPressures : []}
       />
     </Box>

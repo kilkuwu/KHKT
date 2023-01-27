@@ -21,7 +21,7 @@ import { DoubleAxisChart } from "./CustomCharts";
 export default function Temperature({ temperatures }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [chartOpen, setChartOpen] = useState(false);
-  const { ambientTemperature = 0, objectTemperature = 0 } =
+  const { temperature = 0, airQuality = 0 } =
     temperatures[temperatures.length - 1] || {};
 
   const handleClick = () => {
@@ -63,13 +63,13 @@ export default function Temperature({ temperatures }) {
           )}
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
-              primary={ambientTemperature}
+              primary={temperature}
               secondary={"Chất lượng không khí (PPM)"}
             />
           </ListItem>
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
-              primary={objectTemperature}
+              primary={airQuality}
               secondary={"Nhiệt độ cơ thể (°C)"}
             />
           </ListItem>
@@ -77,13 +77,13 @@ export default function Temperature({ temperatures }) {
         <Collapse in={chartOpen} timeout="auto" unmountOnExit>
           <DoubleAxisChart
             data={temperatures}
-            title={"Đồ thị nhiệt độ, chất lượng không khí"}
-            yAxisLeftLabel={"Nhiệt độ (°C)"}
-            yAxisRightLabel={"Chất lượng không khí (PPM)"}
-            dataKey1={"objectTemperature"}
-            dataKey2={"ambientTemperature"}
-            legendTitle1={"Chất lượng không khí"}
-            legendTitle2={"Nhiệt độ cơ thể"}
+            title={"Đồ thị chất lượng không khí, nhiệt độ cơ thể"}
+            yAxisLeftLabel={"Chất lượng không khí (PPM)"}
+            yAxisRightLabel={"Nhiệt độ (°C)"}
+            dataKey1={"temperature"}
+            dataKey2={"airQuality"}
+            legendTitle1={"Nhiệt độ cơ thể"}
+            legendTitle2={"Chất lượng không khí"}
           />
         </Collapse>
       </Collapse>

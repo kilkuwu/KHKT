@@ -15,13 +15,28 @@ const socketHandler = async (socket) => {
       return socket.disconnect();
     }
 
-    socket.on("sendData", (data) => {
-      socket.broadcast.to(id).emit("iot-sendData", data);
+    socket.on("sendHRSpO2", (hr, spo2) => {
+      console.log("hrspo2", hr, spo2);
+      socket.broadcast.to(id).emit("iot-sendHRSpO2", hr, spo2);
     });
 
-    socket.on("sendBP", async (data) => {
-      const { systolic, diastolic } = data;
+    socket.on("sendTemp", (air, tmp) => {
+      console.log("tmp", air, tmp);
+      socket.broadcast.to(id).emit("iot-sendTemp", air, tmp);
+    });
 
+    socket.on("sendCoords", (x, y) => {
+      console.log("coords", x, y);
+      socket.broadcast.to(id).emit("iot-sendCoords", x, y);
+    });
+
+    socket.on("sendECG", (ecg) => {
+      console.log("ECG", ecg);
+      socket.broadcast.to(id).emit("iot-sendECG", ecg);
+    });
+
+    socket.on("sendBP", async (systolic, diastolic) => {
+      console.log("BP", systolic, diastolic);
       device.bloodPressures.push({
         value: { systolic, diastolic },
         timestamp: new Date(),
@@ -30,7 +45,10 @@ const socketHandler = async (socket) => {
         },
       });
 
+      device.bloodPressures.splice(0, device.bloodPressures.length - 50);
+      console.log(device.bloodPressures.length);
       await device.save();
+      socket.broadcast.to(id).emit("iot-sendBP", systolic, diastolic);
     });
   }
 

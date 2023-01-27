@@ -11,7 +11,6 @@ import { OneAxisOneLineChart } from "./CustomCharts";
 
 export default function ECG({ ECGs }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
-  console.log(ECGs);
   const handleClick = () => {
     setIsCollapsed((prev) => !prev);
   };
@@ -41,7 +40,7 @@ export default function ECG({ ECGs }) {
           data={ECGs}
           title={"Điện tâm đồ"}
           yAxisLabel={"ECG (mV)"}
-          dataKey1={"ECG"}
+          dataKey1={"ecg"}
         />
       </Collapse>
     </>

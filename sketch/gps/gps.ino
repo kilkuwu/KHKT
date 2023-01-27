@@ -1,91 +1,167 @@
-#include <stdio.h>
-#include <string.h>
+#include "WiFi.h"
 
-#define DEBUG true
-int PWR_KEY = 9;
-int RST_KEY = 6;
-int LOW_PWR_KEY = 5;
+#define SOS 26
+#define SLEEP_PIN 25
 
-bool ModuleState = false;
+boolean stringComplete = false;
+String inputString = "";
+String fromGSM = "";
+int c = 0;
+String SOS_NUM = "+84971210977";
 
+int SOS_Time = 5;  // Press the button 5 sec
+
+bool CALL_END = 1;
+char* response = " ";
+String res = "";
 void setup() {
-    pinMode(PWR_KEY, OUTPUT);
-    pinMode(RST_KEY, OUTPUT);
-    pinMode(LOW_PWR_KEY, OUTPUT);
-    digitalWrite(RST_KEY, LOW);
-    digitalWrite(LOW_PWR_KEY, HIGH);
-    digitalWrite(PWR_KEY, HIGH);
-    Serial1.begin(115200);
-    digitalWrite(PWR_KEY, LOW);
-    delay(3000);
-    digitalWrite(PWR_KEY, HIGH);
-    delay(10000);
+    // Making Radio OFF for power saving
+    WiFi.mode(WIFI_OFF);  // WiFi OFF
+    btStop();             // Bluetooth OFF
 
-    SerialUSB.begin(115200);
-    // while (!SerialUSB)
-    {
-        ; // wait for serial port to connect
-    }
+    pinMode(SOS, INPUT_PULLUP);
 
-    ModuleState = moduleStateCheck();
-    if(ModuleState == false) // if it's off, turn on it.
-    {
-        digitalWrite(PWR_KEY, LOW);
-        delay(3000);
-        digitalWrite(PWR_KEY, HIGH);
-        delay(10000);
-        SerialUSB.println("Now turnning the A9/A9G on.");
-    }
+    pinMode(SLEEP_PIN, OUTPUT);
 
-    // sendData("AT+CCID", 3000, DEBUG);
-    // sendData("AT+CREG?", 3000, DEBUG);
-    // sendData("AT+CGATT=1", 1000, DEBUG);
-    // sendData("AT+CGACT=1,1", 1000, DEBUG);
-    // sendData("AT+CGDCONT=1,\"IP\",\"CMNET\"", 1000, DEBUG);
+    Serial.begin(115200);                       // For Serial Monitor
+    Serial1.begin(115200, SERIAL_8N1, 32, 33);  // For XIAO C3 Board
 
-    // sendData("AT+CIPSTART=\"TCP\",\"www.mirocast.com\",80", 2000, DEBUG);
-    SerialUSB.println("Maduino A9/A9G Test Begin!");
+    // Waiting for A9G to setup everything for 20 sec
+    delay(20000);
+
+    digitalWrite(SLEEP_PIN, LOW);  // Sleep Mode OFF
+
+    Serial1.println("AT");  // Just Checking
+    delay(1000);
+
+    Serial1.println("AT+GPS = 1");  // Turning ON GPS
+    delay(1000);
+
+    Serial1.println("AT+GPSLP = 2");  // GPS low power
+    delay(1000);
+
+    Serial1.println("AT+SLEEP = 1");  // Configuring Sleep Mode to 1
+    delay(1000);
+
+    digitalWrite(SLEEP_PIN, HIGH);  // Sleep Mode ON
 }
 
 void loop() {
-    while(Serial1.available() > 0) {
-        SerialUSB.write(Serial1.read());
-        yield();
-    }
-    while(SerialUSB.available() > 0) {
-        Serial1.write(SerialUSB.read());
-        yield();
-    }
-}
+    // listen from GSM Module
+    if (Serial1.available()) {
+        char inChar = Serial1.read();
 
-bool moduleStateCheck() {
-    int i = 0;
-    bool moduleState = false;
-    for(i = 0; i < 5; i++) {
-        String msg = String("");
-        msg = sendData("AT", 1000, DEBUG);
-        if(msg.indexOf("OK") >= 0) {
-            SerialUSB.println("A9/A9G Module had turned on.");
-            moduleState = true;
-            return moduleState;
-        }
-        delay(1000);
-    }
-    return moduleState;
-}
+        if (inChar == '\n') {
+            // check the state
+            if (fromGSM == "OK\r") {
+                Serial.println("---------IT WORKS-------");
+            } else if (fromGSM == "RING\r") {
+                digitalWrite(SLEEP_PIN, LOW);  // Sleep Mode OFF
+                Serial.println("---------ITS RINGING-------");
+                Serial1.println("ATA");
+            } else if (fromGSM == "ERROR\r") {
+                Serial.println("---------IT DOESNT WORK-------");
+            }
 
-String sendData(String command, const int timeout, boolean debug) {
-    String response = "";
-    Serial1.println(command);
-    long int time = millis();
-    while((time + timeout) > millis()) {
-        while(Serial1.available()) {
-            char c = Serial1.read();
-            response += c;
+            else if (fromGSM == "NO CARRIER\r") {
+                Serial.println("---------CALL ENDS-------");
+                CALL_END = 1;
+                digitalWrite(SLEEP_PIN, HIGH);  // Sleep Mode ON
+            }
+
+            // write the actual response
+            Serial.println(fromGSM);
+            // clear the buffer
+            fromGSM = "";
+
+        } else {
+            fromGSM += inChar;
+        }
+        delay(20);
+    }
+
+    // read from port 0, send to port 1:
+    if (Serial.available()) {
+        int inByte = Serial.read();
+        Serial1.write(inByte);
+    }
+
+    // When SOS button is pressed
+    if (digitalRead(SOS) == LOW && CALL_END == 1) {
+        Serial.print("Calling In..");  // Waiting for 5 sec
+        for (c = 0; c < SOS_Time; c++) {
+            Serial.println((SOS_Time - c));
+            delay(1000);
+            if (digitalRead(SOS) == HIGH) break;
+        }
+        if (c == 5) {
+            //-------------------------------------  Getting Location and making
+            // Google Maps link of it
+
+            digitalWrite(SLEEP_PIN, LOW);
+            delay(1000);
+            Serial1.println("AT+LOCATION = 2");
+            Serial.println("AT+LOCATION = 2");
+
+            while (!Serial1.available())
+                ;
+            while (Serial1.available()) {
+                char add = Serial1.read();
+                res = res + add;
+                delay(1);
+            }
+
+            res = res.substring(17, 38);
+            response = &res[0];
+
+            Serial.print("Recevied Data - ");
+            Serial.println(
+                response);  // printin the String in lower character form
+            Serial.println("\n");
+
+            if (strstr(response, "GPS NOT")) {
+                Serial.println("No Location data");
+            } else {
+                int i = 0;
+                while (response[i] != ',') i++;
+
+                String location = (String)response;
+                String lat = location.substring(2, i);
+                String longi = location.substring(i + 1);
+                Serial.println(lat);
+                Serial.println(longi);
+
+                String Gmaps_link =
+                    ("http://maps.google.com/maps?q=" + lat + "+" +
+                     longi);  // http://maps.google.com/maps?q=38.9419+-78.3020
+
+                //------------------------------------- Sending SMS with Google
+                // Maps Link with our Location
+                Serial1.println("AT+CMGF=1");
+                delay(1000);
+                Serial1.println("AT+CMGS=\"" + SOS_NUM + "\"\r");
+                delay(1000);
+
+                Serial1.println("I'm here " + Gmaps_link);
+                delay(1000);
+                Serial1.println((char)26);
+                delay(1000);
+            }
+            response = "";
+            res = "";
+
+            //------------------------------------- Calling on that same number
+            // after sending SMS
+            Serial.println("Calling Now");
+            Serial1.println("ATD" + SOS_NUM);
+            CALL_END = 0;
         }
     }
-    if(debug) {
-        SerialUSB.print(response);
+
+    // only write a full message to the GSM module
+    if (stringComplete) {
+        Serial1.print(inputString);
+        inputString = "";
+        stringComplete = false;
     }
-    return response;
 }

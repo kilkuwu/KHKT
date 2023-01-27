@@ -8,9 +8,13 @@ import BloodPressure from "./BloodPressure";
 import Coords from "./Coords";
 import ECG from "./ECG";
 
-export default function RawVisualizedData({ data, bloodPressures }) {
-  const { hrSpO2s, temperatures, coordinates, ECGs } = data;
-
+export default function RawVisualizedData({
+  hrSpO2s,
+  temperatures,
+  coordinates,
+  ECGs,
+  bloodPressures,
+}) {
   return (
     <>
       <List
