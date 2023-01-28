@@ -16,5 +16,12 @@ double randomDouble(double minf, double maxf) {
     return minf + random(1UL << 31) * (maxf - minf) /
                       (1UL << 31);  // use 1ULL<<63 for max double values)
 }
+
+int findNextChar(const String& s, int idx, char c) {
+    for (int i = idx; i < s.length(); i++) {
+        if (s[idx] == c) return i;
+    }
+    return s.length();
+}
 }  // namespace UTIL
 #endif

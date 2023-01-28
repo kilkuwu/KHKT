@@ -46,7 +46,7 @@ const socketHandler = async (socket) => {
       });
 
       device.bloodPressures.splice(0, device.bloodPressures.length - 50);
-      console.log(device.bloodPressures.length);
+
       await device.save();
       socket.broadcast.to(id).emit("iot-sendBP", systolic, diastolic);
     });

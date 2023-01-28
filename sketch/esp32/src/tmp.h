@@ -3,7 +3,7 @@
 #include <Adafruit_MLX90614.h>
 
 namespace TMP {
-Adafruit_MLX90614 mlx;
+Adafruit_MLX90614 mlx = Adafruit_MLX90614();
 
 double tmp[2];
 bool (*emit)(const String&, double[]);
@@ -15,7 +15,12 @@ void init(bool (*callback)(const String&, double[])) {
 #ifndef MEASURE_TEMP
     return;
 #endif
-    mlx.begin();
+    if (!mlx.begin()) {
+        Serial.println("Error connecting to MLX sensor. Check wiring.");
+        for (;;)
+            ;
+    };
+    Serial.println("Initialized TMP");
 }
 
 void update() {
@@ -23,7 +28,7 @@ void update() {
     tmp[0] = UTIL::randomDouble(21, 22);
     tmp[1] = UTIL::randomDouble(21, 22);
 #else
-    tmp[0] = mlx.readAmbientTempC();
+    tmp[0] = analogRead(A6);
     tmp[1] = mlx.readObjectTempC();
 #endif
 }

@@ -63,13 +63,13 @@ export default function Temperature({ temperatures }) {
           )}
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
-              primary={temperature}
+              primary={airQuality}
               secondary={"Chất lượng không khí (PPM)"}
             />
           </ListItem>
           <ListItem sx={{ pl: 4 }}>
             <ListItemText
-              primary={airQuality}
+              primary={temperature}
               secondary={"Nhiệt độ cơ thể (°C)"}
             />
           </ListItem>
@@ -77,9 +77,9 @@ export default function Temperature({ temperatures }) {
         <Collapse in={chartOpen} timeout="auto" unmountOnExit>
           <DoubleAxisChart
             data={temperatures}
-            title={"Đồ thị chất lượng không khí, nhiệt độ cơ thể"}
-            yAxisLeftLabel={"Chất lượng không khí (PPM)"}
-            yAxisRightLabel={"Nhiệt độ (°C)"}
+            title={"Đồ thị nhiệt độ cơ thể, chất lượng không khí"}
+            yAxisLeftLabel={"Nhiệt độ cơ thể (°C)"}
+            yAxisRightLabel={"Chất lượng không khí (PPM)"}
             dataKey1={"temperature"}
             dataKey2={"airQuality"}
             legendTitle1={"Nhiệt độ cơ thể"}

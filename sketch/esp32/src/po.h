@@ -20,8 +20,6 @@ void init(bool (*callback)(const String&, double[])) {
 #ifndef MEASURE_HR_SPO2
     return;
 #endif
-    Serial.begin(115200);
-    pinMode(17, OUTPUT);
     if (!pox.begin()) {
         Serial.printf("FAILED\n");
         for (;;)
@@ -32,6 +30,7 @@ void init(bool (*callback)(const String&, double[])) {
         pox.setOnBeatDetectedCallback(onBeatDetected);
     }
     pox.setIRLedCurrent(MAX30100_LED_CURR_7_6MA);
+    Serial.println("Initialized PO.");
 }
 
 void update() {

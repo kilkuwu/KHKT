@@ -4,24 +4,35 @@
 namespace BP {
 bool (*emit)(const String&, double[]);
 double BP[2];
-const unsigned long interval = 120000;
-unsigned long last = 0, now;
 
 void init(bool (*callback)(const String&, double[])) {
     emit = callback;
+#ifndef MEASURE_BP
+    return;
+#endif
+    Serial2.begin(115200, SERIAL_8N1, 32, 33);
 }
 
-void update() {
-    BP[0] = UTIL::randomDouble(95, 110);
-    BP[1] = UTIL::randomDouble(60, 70);
+bool update() {
+    if (Serial2.available() <= 0) return 0;
+    char c = Serial2.read();
+    if (c != 'b') {
+        String payload = Serial2.readString();
+        Serial.print("Data got: ");
+        Serial.print(c);
+        Serial.println(payload);
+        return 0;
+    }
+    c = Serial2.read();
+    if (c != 'p') return 0;
+    BP[0] = Serial2.parseFloat();
+    BP[1] = Serial2.parseFloat();
+    Serial.printf("Finished measuring BP: %f %f\n", BP[0], BP[1]);
+    return 1;
 }
 
 void loop() {
-    update();
-    now = millis();
-    if (now - last < interval) return;
-    (*emit)("sendBP", BP);
-    last = now;
+    if (update()) (*emit)("sendBP", BP);
 }
 
 }  // namespace BP

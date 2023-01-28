@@ -26,7 +26,7 @@ namespace IOC {
 String HOST = "pamonitor.kilk.ml";
 int PORT = 443;
 #else
-String HOST = "192.168.1.18";
+String HOST = "192.168.1.6";
 int PORT = 3001;
 #endif
 
@@ -82,7 +82,9 @@ bool emit(const String &type, double data[]) {
     String payload;
     serializeJson(doc, payload);
     bool success = IOC::client.sendEVENT(payload);
-    Serial.printf("[IOc] Emit \"%s\": %d\n", type.c_str(), success);
+    if (!success)
+        Serial.printf("[IOc] Failed to emit \"%s\": %d\n", type.c_str(),
+                      success);
     return success;
 }
 

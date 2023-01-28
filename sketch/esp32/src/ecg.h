@@ -3,7 +3,7 @@
 namespace ECG {
 bool (*emit)(const String&, double[]);
 double ecg[1];
-const unsigned long interval = 1000;
+const unsigned long interval = 100;
 unsigned long last = 0, now;
 
 void init(bool (*callback)(const String&, double[])) {
@@ -11,7 +11,11 @@ void init(bool (*callback)(const String&, double[])) {
 }
 
 void update() {
+#ifndef MEASURE_ECG
     ecg[0] = UTIL::randomDouble(50, 128);
+#else
+    ecg[0] = analogRead(A7);
+#endif
 }
 
 void loop() {
