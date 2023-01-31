@@ -36,10 +36,14 @@ static void getData() {
         po[0] = hr;
     else if (TMP::tmp[1] > 26)
         po[0] = UTIL::randomDouble(80.0, 90.0);
+    else
+        po[0] = hr;
     if (spo2 > 0)
         po[1] = spo2;
     else if (TMP::tmp[1] > 26)
         po[1] = UTIL::randomDouble(95.0, 99.0);
+    else
+        po[1] = spo2;
 }
 
 void PO::loop() {

@@ -60,15 +60,13 @@ bool IOC::emit(const String &type, double data[], int n) {
     if (WiFi.status() != WL_CONNECTED) return 0;
 
     if (client.isConnected() == false) return 0;
-
-    DynamicJsonDocument doc(128);
-    JsonArray arr = doc.to<JsonArray>();
-    arr.add(type);
+    String payload = "[\"";
+    payload += type;
+    payload += "\",";
     for (int i = 0; i < n; i++) {
-        arr.add(data[i]);
+        payload += String(data[i], 6);
+        payload += i == n - 1 ? ']' : ',';
     }
-    String payload;
-    serializeJson(doc, payload);
     bool success = IOC::client.sendEVENT(payload);
     if (!success)
         Serial.printf("[IOc] Failed to emit \"%s\": %d\n", type.c_str(),

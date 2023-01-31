@@ -29,7 +29,14 @@ const socketHandler = async (socket) => {
     });
 
     socket.on("sendECG", (...ecg) => {
-      socket.broadcast.to(id).emit("iot-sendECG", ecg);
+      socket.broadcast.to(id).emit(
+        "iot-sendECG",
+        ecg.map((e) => {
+          return {
+            ecg: e,
+          };
+        })
+      );
     });
 
     socket.on("sendBP", async (systolic, diastolic) => {

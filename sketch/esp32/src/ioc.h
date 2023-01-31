@@ -2,7 +2,6 @@
 #define IOC_INCLUDE
 #define PROD
 #include <Arduino.h>
-#include <ArduinoJson.h>
 #include <SocketIOclient.h>
 
 namespace EH {
