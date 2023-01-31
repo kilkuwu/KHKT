@@ -28,7 +28,7 @@ const socketHandler = async (socket) => {
       socket.broadcast.to(id).emit("iot-sendCoords", x, y);
     });
 
-    socket.on("sendECG", (ecg) => {
+    socket.on("sendECG", (...ecg) => {
       socket.broadcast.to(id).emit("iot-sendECG", ecg);
     });
 

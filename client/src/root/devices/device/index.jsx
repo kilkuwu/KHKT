@@ -102,9 +102,7 @@ export default function Device() {
       ])
     );
 
-    socket.on("iot-sendECG", (ecg) =>
-      setECGs((prev) => [...prev.slice(-MAX_DATA), { ecg }])
-    );
+    socket.on("iot-sendECG", (ecg) => setECGs(ecg));
 
     socket.on("iot-sendBP", () => {
       fetchDevice();

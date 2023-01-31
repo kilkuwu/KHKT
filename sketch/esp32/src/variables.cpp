@@ -13,5 +13,6 @@ String GPS::currentMessage = "Chua co thong tin";
 
 double ECG::ecgs[ECG_MX_SZ];
 int ECG::sz = 0;
+bool ECG::doneMeasureECG = 0;
 
 double PO::po[2];

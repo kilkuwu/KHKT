@@ -27,6 +27,7 @@ namespace ECG {
 #define ECG_MX_SZ 128
 extern double ecgs[ECG_MX_SZ];
 extern int sz;
+extern bool doneMeasureECG;
 }  // namespace ECG
 
 namespace PO {

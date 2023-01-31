@@ -1,6 +1,6 @@
 #ifndef IOC_INCLUDE
 #define IOC_INCLUDE
-// #define PROD
+#define PROD
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <SocketIOclient.h>

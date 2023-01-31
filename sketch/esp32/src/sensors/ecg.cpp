@@ -8,4 +8,7 @@ void ECG::init(bool (*callback)(const String&, double[], int)) {
 }
 
 void ECG::loop() {
+    if (!doneMeasureECG) return;
+    doneMeasureECG = 0;
+    (*emit)("sendECG", ecgs, ECG_MX_SZ);
 }

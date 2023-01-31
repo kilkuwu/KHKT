@@ -12,7 +12,7 @@
 #include "src/display.h"
 
 String chipId;
-TaskHandle_t handler1, handler2, handler3;
+TaskHandle_t handler1, handler2;
 
 void initParts() {
     BP::init(&IOC::emit);
@@ -64,34 +64,10 @@ void setup() {
         &handler2, /* Task handle to keep track of created task */
         1);        /* pin task to core 1 */
     delay(500);
-
-    // xTaskCreatePinnedToCore(
-    //     task3,     /* Task function. */
-    //     "Task3",   /* name of task. */
-    //     10000,     /* Stack size of task */
-    //     NULL,      /* parameter of the task */
-    //     1,         /* priority of the task */
-    //     &handler3, /* Task handle to keep track of created task */
-    //     0);        /* pin task to core 1 */
-    // delay(500);
-
-    // xTaskCreatePinnedToCore(
-    //     task4,     /* Task function. */
-    //     "Task4",   /* name of task. */
-    //     10000,     /* Stack size of task */
-    //     NULL,      /* parameter of the task */
-    //     1,         /* priority of the task */
-    //     &handler4, /* Task handle to keep track of created task */
-    //     0);        /* pin task to core 1 */
-    // delay(500);
 }
 
 void task1(void *parameters) {
     for (;;) {
-        PO::loop();
-        delay(1);
-        BP::loop();
-        delay(1);
         GPS::loop();
         delay(1);
         TMP::loop();
@@ -101,11 +77,11 @@ void task1(void *parameters) {
 
 void task2(void *parameters) {
     for (;;) {
-        PO::update();
-        Serial.print(PO::po[0]);
-        Serial.print("\t");
-        Serial.println(PO::po[1]);
+        PO::loop();
         delay(1);
+        BP::loop();
+        delay(1);
+        ECG::loop();
     }
 }
 

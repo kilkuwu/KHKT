@@ -65,6 +65,7 @@ void ECG_S::onTouch() {
     tft.fillScreen(TFT_WHITE);
     tftPrintTitle("Do ECG thanh cong!");
     delay(2500);
+    ECG::doneMeasureECG = 1;
     setup();
 }
 
