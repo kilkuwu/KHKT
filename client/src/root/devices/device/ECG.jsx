@@ -14,7 +14,6 @@ export default function ECG({ ECGs }) {
   const handleClick = () => {
     setIsCollapsed((prev) => !prev);
   };
-  console.log(ECGs);
 
   return (
     <>
