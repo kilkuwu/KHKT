@@ -22,20 +22,19 @@ void BP_S::loop() {
     tft.setCursor(0, 40, 2);
     if (isMeasuring || finishMeasuring) trying = 0;
     if (isMeasuring) {
-        tft.printf("  Dang do huyet ap\n");
+        tft.printf(" Dang do huyet ap\n");
     } else if (finishMeasuring) {
         if (finishMeasuring == 1) {
-            tft.printf("  Da do duoc:\n  SYS: %0.0f\n  DIA: %0.0f", bp[0],
-                       bp[1]);
+            tft.printf(" Da do duoc:\n SYS: %0.0f\n DIA: %0.0f", bp[0], bp[1]);
         } else {
-            tft.printf("  Da xay ra loi!\n  Xin hay thu lai!");
+            tft.printf(" Da xay ra loi!\n Xin hay thu lai!");
         }
         finishMeasuring = 0;
         delay(3000);
     } else if (trying)
         ;
     else {
-        tft.printf("  Lan cuoi do duoc:\n  SYS: %0.0f\n  DIA: %0.0f\n", bp[0],
+        tft.printf(" Lan cuoi do duoc:\n SYS: %0.0f\n DIA: %0.0f\n", bp[0],
                    bp[1]);
     }
     delay(2000);
@@ -46,7 +45,7 @@ void BP_S::onTouch() {
     delay(500);
     digitalWrite(START_BP_PIN, LOW);
     tft.setCursor(0, 64, 2);
-    tft.print("Chuan bi do huyet ap...");
+    tft.print(" Chuan bi do huyet ap...");
     trying = 1;
 }
 
