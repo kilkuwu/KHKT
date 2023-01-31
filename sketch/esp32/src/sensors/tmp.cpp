@@ -25,9 +25,9 @@ void TMP::update() {
 }
 
 void TMP::loop() {
+    update();
     now = millis();
     if (now - last < interval) return;
-    update();
     int delta = random(5);
     int neg = random(2);
     if (neg) delta = -delta;
