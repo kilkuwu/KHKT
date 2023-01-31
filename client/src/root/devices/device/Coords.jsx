@@ -16,7 +16,9 @@ import LeafletMap from "./LeafletMap";
 export default function Coords({ coordinates }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [chartOpen, setChartOpen] = useState(false);
-  const { coordX = 0, coordY = 0 } = coordinates;
+  const { coordX, coordY } = coordinates.length
+    ? coordinates[coordinates.length - 1]
+    : { coordX: 0, coordY: 0 };
 
   const handleClick = () => {
     setIsCollapsed((prev) => !prev);
@@ -44,7 +46,7 @@ export default function Coords({ coordinates }) {
       </ListItemButton>
       <Collapse in={!isCollapsed} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {!coordinates.coordX && (
+          {!coordinates.length && (
             <Typography
               align="center"
               color="error"

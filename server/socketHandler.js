@@ -16,12 +16,10 @@ const socketHandler = async (socket) => {
     }
 
     socket.on("sendHRSpO2", (hr, spo2) => {
-      console.log("hrspo2", hr, spo2);
       socket.broadcast.to(id).emit("iot-sendHRSpO2", hr, spo2);
     });
 
     socket.on("sendTemp", (air, tmp) => {
-      console.log("tmp", air, tmp);
       socket.broadcast.to(id).emit("iot-sendTemp", air, tmp);
     });
 
@@ -31,7 +29,6 @@ const socketHandler = async (socket) => {
     });
 
     socket.on("sendECG", (ecg) => {
-      console.log("ECG", ecg);
       socket.broadcast.to(id).emit("iot-sendECG", ecg);
     });
 

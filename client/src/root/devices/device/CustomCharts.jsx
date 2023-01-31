@@ -23,6 +23,7 @@ export function DoubleAxisChart({
   dataKey1,
   dataKey2,
 }) {
+  if (!data.length) return "";
   return (
     <Box
       height={"500px"}
@@ -121,6 +122,7 @@ export function OneAxisChart({
   dataKey1,
   dataKey2,
 }) {
+  if (!data.length) return "";
   return (
     <Box
       height={"500px"}
@@ -197,6 +199,7 @@ export function OneAxisOneLineChart({
   legendTitle1,
   dataKey1,
 }) {
+  if (!data.length) return "";
   return (
     <Box
       height={"500px"}
@@ -295,6 +298,7 @@ export function DateBarChart({
   dataKey1,
   dataKey2,
 }) {
+  if (!data.length) return "";
   return (
     <Box
       height={"500px"}

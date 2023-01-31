@@ -1,95 +1,28 @@
 #ifndef IOC_INCLUDE
 #define IOC_INCLUDE
+// #define PROD
+#include <Arduino.h>
 #include <ArduinoJson.h>
 #include <SocketIOclient.h>
 
-namespace EventHandler {
-void handleConnect(uint8_t *_, const size_t &length) {
-    Serial.printf("[IOc] Connected to url: %s\n", _);
-}
-
-void handleDisconnect(uint8_t *payload, const size_t &length) {
-    Serial.printf("[IOc] Disconnected!\n");
-}
-
-void handleError(uint8_t *payload, const size_t &length) {
-    Serial.printf("[IOc] get error: %u\n", length);
-}
-
-void handleEvent(uint8_t *payload, const size_t &length) {
-    Serial.printf("[IOc] get event: %s\n", payload);
-}
-}  // namespace EventHandler
+namespace EH {
+void handleConnect(uint8_t *_, const size_t &length);
+void handleDisconnect(uint8_t *payload, const size_t &length);
+void handleError(uint8_t *payload, const size_t &length);
+void handleEvent(uint8_t *payload, const size_t &length);
+}  // namespace EH
 
 namespace IOC {
-#ifdef PROD
-String HOST = "pamonitor.kilk.ml";
-int PORT = 443;
-#else
-String HOST = "192.168.1.6";
-int PORT = 3001;
-#endif
+extern SocketIOclient client;
 
-SocketIOclient client;
-const int numberOfEvents = 7;
-void (*eventHandlers[numberOfEvents])(uint8_t *, const size_t &);
+int getType(socketIOmessageType_t type);
 
-int getType(socketIOmessageType_t type) {
-    return type - 48;
-}
+void socketManager(socketIOmessageType_t type, uint8_t *payload, size_t length);
 
-void socketManager(socketIOmessageType_t type, uint8_t *payload,
-                   size_t length) {
-    if (type == sIOtype_CONNECT) client.send(sIOtype_CONNECT, "/");
-    int baseType = getType(type);
-    if (eventHandlers[baseType] != nullptr) {
-        (*eventHandlers[baseType])(payload, length);
-    }
-}
+void init(String &chipId);
 
-void init(String &chipId) {
-    eventHandlers[getType(sIOtype_CONNECT)] = &EventHandler::handleConnect;
-    eventHandlers[getType(sIOtype_DISCONNECT)] =
-        &EventHandler::handleDisconnect;
-    eventHandlers[getType(sIOtype_ERROR)] = &EventHandler::handleError;
-    eventHandlers[getType(sIOtype_EVENT)] = &EventHandler::handleEvent;
-#ifdef PROD
-    client.beginSSL(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
-#else
-    client.begin(HOST, PORT, (String("/socket.io/?EIO=4&id=") + chipId));
-#endif
-    client.onEvent(socketManager);
-}
+bool emit(const String &type, double data[], int n);
 
-bool emit(const String &type, double data[]) {
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.printf("[IOc] Not connected to internet\n");
-        return 0;
-    }
-
-    if (IOC::client.isConnected() == false) {
-        Serial.printf("[IOc] Not connected to server\n");
-        return 0;
-    }
-
-    DynamicJsonDocument doc(128);
-    JsonArray arr = doc.to<JsonArray>();
-    arr.add(type);
-    int n = type == "sendECG" ? 1 : 2;
-    for (int i = 0; i < n; i++) {
-        arr.add(data[i]);
-    }
-    String payload;
-    serializeJson(doc, payload);
-    bool success = IOC::client.sendEVENT(payload);
-    if (!success)
-        Serial.printf("[IOc] Failed to emit \"%s\": %d\n", type.c_str(),
-                      success);
-    return success;
-}
-
-void loop() {
-    IOC::client.loop();
-}
+void loop();
 }  // namespace IOC
 #endif
