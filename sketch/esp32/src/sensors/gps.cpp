@@ -64,7 +64,7 @@ void GPS::beginSOS() {
     delay(1000);
     Serial1.println("AT+CMGS=\"" SOS_NUM "\"\r");
     delay(1000);
-    if (updated) {
+    if (!updated) {
         Serial.println("No Location data");
         Serial1.println("Unable to fetch location. Please try again");
     } else {

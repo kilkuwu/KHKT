@@ -32,7 +32,7 @@ void BP_S::loop() {
         finishMeasuring = 0;
         delay(3000);
     } else if (trying)
-        ;
+        tft.print(" Chuan bi do huyet ap...");
     else {
         tft.printf(" Lan cuoi do duoc:\n SYS: %0.0f\n DIA: %0.0f\n", bp[0],
                    bp[1]);
@@ -43,9 +43,7 @@ void BP_S::loop() {
 void BP_S::onTouch() {
     digitalWrite(START_BP_PIN, HIGH);
     delay(500);
-    digitalWrite(START_BP_PIN, LOW);
-    tft.setCursor(0, 64, 2);
-    tft.print(" Chuan bi do huyet ap...");
+    digitalWrite(START_BP_PIN, LOW); 
     trying = 1;
 }
 
